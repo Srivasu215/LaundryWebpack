@@ -56,6 +56,26 @@ class KSGlobalClientSideFuncsClass {
             }
         },
         ApiFuncs: {
+            QrCode: async (inEvent) => {
+                if ((inEvent === undefined) === false) {
+                    let jVarLocalCurrentTarget = inEvent.currentTarget;
+                    this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
+                };
+
+                let jVarLocalFromTemplate = await this.Booking.HtmlFuns.Hbs.QrCode();
+
+                var template = Handlebars.compile(jVarLocalFromTemplate);
+               
+                let jVarLocalDataNeeded = await this.Booking.JSFuncs.Show();
+
+                if (jVarLocalDataNeeded.KTF === false) {
+
+                };
+
+                let jVarLocalHtml = template(jVarLocalDataNeeded.JsonData);
+
+                document.getElementById("KCont1").innerHTML = jVarLocalHtml;
+            },
             ShowAll: async (inEvent) => {
                 if ((inEvent === undefined) === false) {
                     let jVarLocalCurrentTarget = inEvent.currentTarget;
@@ -145,7 +165,8 @@ class KSGlobalClientSideFuncsClass {
                     let response = await fetch(jVarLocalFetchUrl);
                     let data = await response.text();
                     return await data;
-                },
+                }
+           
 
             },
             Hbs: {
@@ -155,6 +176,12 @@ class KSGlobalClientSideFuncsClass {
 
                     return await data;
 
+                },
+                QrCode: async () => {
+                    let jVarLocalFetchUrl = "Hbs/Booking/QrCode.html";
+                    let response = await fetch(jVarLocalFetchUrl);
+                    let data = await response.text();
+                    return await data;
                 }
             }
         }
