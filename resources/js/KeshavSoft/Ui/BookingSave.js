@@ -82,21 +82,19 @@ class KSGlobalClientSideFuncsClass {
                     this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
                 };
 
-                let jVarLocalFromTemplate = await this.Booking.HtmlFuns.Templates.ShowAll();
-                let jVarLocalKCont1 = document.getElementById("KCont1");
-                jVarLocalKCont1.innerHTML = jVarLocalFromTemplate;
+                let jVarLocalFromTemplate = await this.Booking.HtmlFuns.Hbs.ShowAll();
 
+                var template = Handlebars.compile(jVarLocalFromTemplate);
+               
                 let jVarLocalDataNeeded = await this.Booking.JSFuncs.Show();
-                let jVarLocalFromHbs = await this.Booking.HtmlFuns.Hbs.Row();
 
                 if (jVarLocalDataNeeded.KTF === false) {
 
                 };
 
-                var template = Handlebars.compile(jVarLocalFromHbs);
                 let jVarLocalHtml = template(jVarLocalDataNeeded.JsonData);
 
-                document.getElementById("KTableBody").innerHTML = jVarLocalHtml;
+                document.getElementById("KCont1").innerHTML = jVarLocalHtml;
             },
             Show: async (inEvent) => {
                 if ((inEvent === undefined) === false) {
@@ -159,12 +157,6 @@ class KSGlobalClientSideFuncsClass {
                     let response = await fetch(jVarLocalFetchUrl);
                     let data = await response.text();
                     return await data;
-                },
-                ShowAll: async () => {
-                    let jVarLocalFetchUrl = "Templates/Booking/ShowAll.html";
-                    let response = await fetch(jVarLocalFetchUrl);
-                    let data = await response.text();
-                    return await data;
                 }
            
 
@@ -179,6 +171,12 @@ class KSGlobalClientSideFuncsClass {
                 },
                 QrCode: async () => {
                     let jVarLocalFetchUrl = "Hbs/Booking/QrCode.html";
+                    let response = await fetch(jVarLocalFetchUrl);
+                    let data = await response.text();
+                    return await data;
+                },
+                ShowAll: async () => {
+                    let jVarLocalFetchUrl = "Hbs/Booking/ShowAll.html";
                     let response = await fetch(jVarLocalFetchUrl);
                     let data = await response.text();
                     return await data;
