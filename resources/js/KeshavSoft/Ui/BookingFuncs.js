@@ -126,17 +126,37 @@ class KSGlobalBookingClass {
         },
         Header: {
             ShowinDOM: async () => {
-                let jVarLocalFromHbs = await this.Booking.HtmlFuns.Templates.Header.PullFunc();
+                let jVarLocalFromHbs = await this.HtmlFuns.Templates.Header.PullFunc();
 
                 let jVarLocalKCont1 = document.getElementById("KHeader");
                 jVarLocalKCont1.innerHTML = jVarLocalFromHbs;
             },
+            MenuItemClick:
+            {
+                HomeClick: async () => {
+                    let jVarLocalFromHbs = await this.HtmlFuns.Templates.Header.MenuItemClick.HomeClick();
+
+                    let jVarLocalKHeader = document.getElementById("KHeader");
+                    jVarLocalKHeader.innerHTML = jVarLocalFromHbs;
+                    let jVarLocalKCont1 = document.getElementById("KCont1");
+                    jVarLocalKCont1.innerHTML = "";
+                }
+            }
         }
     };
 
     static HtmlFuns = {
         Templates: {
             Header: {
+                MenuItemClick:
+                {
+                    HomeClick: async () => {
+                        let jVarLocalFetchUrl = "Templates/Header.html";
+                        let response = await fetch(jVarLocalFetchUrl);
+                        let data = await response.text();
+                        return await data;
+                    }
+                },
                 PullFunc: async () => {
                     let jVarLocalFetchUrl = "Templates/Booking/Header.html";
                     let response = await fetch(jVarLocalFetchUrl);
@@ -157,8 +177,6 @@ class KSGlobalBookingClass {
                 let data = await response.text();
                 return await data;
             }
-
-
         },
         Hbs: {
             Row: async () => {
