@@ -53,6 +53,25 @@ class KSGlobalClientSideFuncsClass {
 
                 return await LocalReturnObject;
 
+            },
+            Delete: async () => {
+                let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
+
+                let LocalDataFromJson = await DalFuncsClass.Booking.DeleteFunc();
+                let LocalSNo = 1;
+
+                Object.entries(LocalDataFromJson.JsonData).forEach(
+                    ([key, value]) => {
+                        LocalReturnObject.JsonData[key] = value;
+                        LocalReturnObject.JsonData[key].SNo = LocalSNo;
+                        LocalSNo += 1;
+                    }
+                );
+
+                LocalReturnObject.KTF = true;
+
+                return await LocalReturnObject;
+
             }
         },
         ApiFuncs: {
@@ -63,6 +82,26 @@ class KSGlobalClientSideFuncsClass {
                 };
 
                 let jVarLocalFromTemplate = await this.Booking.HtmlFuns.Hbs.QrCode();
+
+                var template = Handlebars.compile(jVarLocalFromTemplate);
+               
+                let jVarLocalDataNeeded = await this.Booking.JSFuncs.Show();
+
+                if (jVarLocalDataNeeded.KTF === false) {
+
+                };
+
+                let jVarLocalHtml = template(jVarLocalDataNeeded.JsonData);
+
+                document.getElementById("KCont1").innerHTML = jVarLocalHtml;
+            },
+            Delete: async (inEvent) => {
+                if ((inEvent === undefined) === false) {
+                    let jVarLocalCurrentTarget = inEvent.currentTarget;
+                    this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
+                };
+
+                let jVarLocalFromTemplate = await this.Booking.HtmlFuns.Hbs.Delete();
 
                 var template = Handlebars.compile(jVarLocalFromTemplate);
                
@@ -177,6 +216,12 @@ class KSGlobalClientSideFuncsClass {
                 },
                 ShowAll: async () => {
                     let jVarLocalFetchUrl = "Hbs/Booking/ShowAll.html";
+                    let response = await fetch(jVarLocalFetchUrl);
+                    let data = await response.text();
+                    return await data;
+                },
+                Delete: async () => {
+                    let jVarLocalFetchUrl = "Hbs/Booking/Delete.html";
                     let response = await fetch(jVarLocalFetchUrl);
                     let data = await response.text();
                     return await data;
