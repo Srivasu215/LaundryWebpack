@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Booking Customers Barcode</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS v5.2.0-beta1 -->
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+		integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"> -->
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+	<script type="text/javascript" src="/js/bwip-js-min.js"></script>
+
+	<!-- <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css"> -->
+	<link rel="stylesheet" href="/css/print.min.css">
+	<link rel="stylesheet" href="/css/header.css">
+</head>
+
+<body>
+	<header id="KHeader">
+
+	</header>
+	<main>
+		<div class="container" id="KCont1">
+
+		</div>
+	</main>
+
+	<div id="AlertWarningId" class="alert alert-warning alert-dismissible fade show" role="alert" style="display:none;">
+		<div id="AlertWarningMessageId"><strong>Sorry!</strong> Data not saved</div>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+
+	<div id="AlertSuccessId" class="alert alert-success alert-dismissible fade show" role="alert" style="display:none;">
+		<div id="AlertSuccessMessageId"><strong>Hurray!</strong> Data saved</div>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="ModalForQrCode" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="ModalBody">
+					<div class="row">
+						<div class="col" id="ModalCustomerName"></div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<canvas id="canvas" width=1 height=1
+								style="border:1px solid #fff;visibility:hidden"></canvas>
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col" id="ModalPK">
+
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col" id="ModalGarments">
+
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col" id="ModalWeight">
+
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="col fw-bold" id="ModalMobile">
+
+						</div>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" onclick="printJS('ModalBody', 'html')">Print</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="footer mt-auto py-2 bg-light fixed-bottom">
+		<div class="container">
+			<div class="bg-light d-flex justify-content-between">
+				<div>KeshavSoft v9.26</div>
+				<div data-BaseString="Last refresh : " id="KLastRefreshDT">Last refresh : </div>
+			</div>
+		</div>
+	</footer>
+	<!-- Bootstrap JavaScript Libraries -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+		integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
+		</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+		integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous">
+		</script> -->
+
+	<script src="/js/bootstrap.min.js"></script>
+
+	<script src="/js/neutralino.js"></script>
+	<script src="/js/handlebars.min-v4.7.7.js"></script>
+
+	<script src="/js/lodash.js"></script>
+
+	<script src="/js/print.min.js"></script>
+	<script src="/js/KeshavSoft/HandleBars/HelperFuns.js"></script>
+	<script src="/js/KeshavSoft/Ui/BookingSave.js"></script>
+
+	<script src="/Dal/JsonFuncs.js"></script>
+	<!-- 
+	<script src="/Dal/Bookings/Insert.js"></script>
+	<script src="/Dal/Bookings/Show.js"></script>
+	<script src="/Dal/Bookings/Delete.js"></script>
+	<script src="/Dal/Bookings/Pick.js"></script>
+ -->
+	<script>
+
+		let jFShowData = async () => {
+			let LocalDataFromJson = await ShowTodayFunc();
+			let LocalDataToHbs = {};
+			let LocalSNo = 1;
+
+			let LocalDataWithSno = Object.keys(LocalDataFromJson.JsonData).map((element, LoopIndex) => {
+				element.SNo = LoopIndex + 1;
+				return element;
+			});
+
+			Object.entries(LocalDataFromJson.JsonData).forEach(
+				([key, value]) => {
+					LocalDataToHbs[key] = value;
+					LocalDataToHbs[key].SNo = LocalSNo;
+					LocalSNo += 1;
+				}
+			);
+
+			let response = await fetch("Hbs/Row.html");
+			let data = await response.text();
+
+			var template = Handlebars.compile(data);
+			let jVarLocalHtml = template(LocalDataToHbs);
+
+			document.getElementById("KTableBody").innerHTML = jVarLocalHtml;
+		};
+
+		let jFGenerateQrCodeOnCanvas = ({ inQrData = "" }) => {
+			var canvas = document.getElementById('canvas');
+			canvas.height = 1;
+			canvas.width = 1;
+			canvas.style.visibility = 'hidden';
+
+			// Convert the options to an object.
+			let opts = {};
+
+			// Finish up the options
+			opts.text = inQrData;
+			opts.bcid = "qrcode";
+			opts.scaleX = 1;
+			opts.scaleY = 1;
+			opts.rotate = "N";
+
+			// Draw the bar code to the canvas
+			try {
+				let ts0 = new Date;
+				bwipjs.toCanvas(canvas, opts);
+				show(ts0, new Date);
+			} catch (e) {
+				console.log("error : ", e);
+				// Watch for BWIPP generated raiseerror's.
+
+				return;
+			}
+
+			function show(ts0, ts1) {
+				canvas.style.visibility = 'visible';
+				//setURL();
+				// document.getElementById('stats').textContent = 'Rendered in ' + (ts1 - ts0) + ' msecs.';
+				// document.getElementById('saveas').style.visibility = 'visible';
+				// saveCanvas.basename = elt.sym + '-' + text.replace(/[^a-zA-Z0-9._]+/g, '-');
+
+			}
+		};
+
+		let serializeObject = (form) => {
+			// Create a new FormData object
+			const formData = new FormData(form);
+
+			// Create an object to hold the name/value pairs
+			const pairs = {};
+
+			// Add each name/value pair to the object
+			for (const [name, value] of formData) {
+				pairs[name] = value;
+			}
+
+			// Return the object
+			return pairs;
+		};
+
+		let jFSave1 = async () => {
+			let jVarLocalFormVertical = document.getElementById("FormVertical");
+
+			jVarLocalFormVertical.classList.remove('was-validated');
+			jVarLocalFormVertical.classList.add('novalidate');
+
+			if (jVarLocalFormVertical.checkValidity()) {
+				let PromiseDataFromSave = await InsertFunc({ inObjectToInsert: serializeObject(jVarLocalFormVertical) });
+
+				if (PromiseDataFromSave.KTF) {
+					let jVarLocalAlertSuccessId = document.getElementById("AlertSuccessId");
+					let jVarLocalAlertSuccessMessageId = document.getElementById("AlertSuccessMessageId");
+					jVarLocalAlertSuccessId.style.display = "";
+					jVarLocalAlertSuccessMessageId.innerHTML = `<strong>Hurray!</strong> ${PromiseDataFromSave.KResult}`
+
+					setTimeout(function () {
+						jVarLocalAlertSuccessId.style.display = "none"
+
+					}, 7000);
+				} else {
+					let jVarLocalAlertDangerId = document.getElementById("AlertWarningId");
+					let jVarLocalAlertDangerMessageId = document.getElementById("AlertWarningMessageId");
+					jVarLocalAlertDangerId.style.display = "";
+					jVarLocalAlertDangerMessageId.innerHTML = `<strong>Sorry!</strong> ${PromiseDataFromSave.KReason}`
+
+					setTimeout(function () {
+						jVarLocalAlertDangerId.style.display = "none"
+
+					}, 7000);
+				};
+			} else {
+				document.forms[1].classList.add('was-validated');
+			};
+		};
+
+		let jFSearchKeyPress = async (inEvent) => {
+			if (inEvent.keyCode === 13) {
+				let jVarLocalCurrentTarget = inEvent.currentTarget;
+				let jVarLocalSearchValue = jVarLocalCurrentTarget.value;
+				let jVarLocalSearchValueArray = jVarLocalSearchValue.split("/");
+
+				let jVarLocalDataNeeded = await PickFunc({ inRowPK: jVarLocalSearchValueArray[0] });
+
+				if (jVarLocalDataNeeded.KTF) {
+
+					console.log("jVarLocalDataNeeded : ", jVarLocalDataNeeded);
+
+					let response = await fetch("Hbs/PopUp/Vertical.html");
+					let data = await response.text();
+
+					var template = Handlebars.compile(data);
+					let jVarLocalHtml = template(jVarLocalDataNeeded.KResult);
+					let jVarLocalShowModalId = document.getElementById("ShowModalId");
+					jVarLocalShowModalId.querySelector(".modal-body").innerHTML = jVarLocalHtml;
+
+					var myModal = new bootstrap.Modal(jVarLocalShowModalId, { keyboard: false, focus: true });
+					myModal.show();
+
+				};
+			};
+		};
+
+		Neutralino.init();
+
+		let jFBookingHtmlInsert = async () => {
+			let jVarLocalFetchUrl = "Templates/Booking/Insert.html";
+			let response = await fetch(jVarLocalFetchUrl);
+			let data = await response.text();
+			let jVarLocalKCont1 = document.getElementById("KCont1");
+			jVarLocalKCont1.innerHTML = data;
+		};
+
+
+		let jFBookingHtmlShow = async () => {
+			let jVarLocalFetchUrl = "Templates/Booking/Show.html";
+			let response = await fetch(jVarLocalFetchUrl);
+			let data = await response.text();
+			let jVarLocalKCont1 = document.getElementById("KCont1");
+			jVarLocalKCont1.innerHTML = data;
+		};
+
+		KSGlobalClientSideFuncsClass.Booking.ApiFuncs.Header.ShowinDOM();
+		KSGlobalClientSideFuncsClass.Booking.ApiFuncs.Insert();
+
+		// Neutralino.os.showMessageBox('Welcome', 'Hello Neutralinojs');
+
+	</script>
+</body>
+
+</html>

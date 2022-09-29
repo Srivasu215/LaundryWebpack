@@ -1,0 +1,80 @@
+<form id="FormVertical" onsubmit="return false;">
+    <div class="row">
+        <div class="row col-md-6 mb-3">
+            <label class="col-md-6 col-form-label fs-2">Customer Name</label>
+
+            <div class="col-md-6">
+                <input type="text" class="form-control fs-2" name="CustomerName" id="CustomerName"
+                    aria-describedby="emailHelp" required="">
+                <div class="invalid-feedback">
+                    Should not be empty!
+                </div>
+
+            </div>
+        </div>
+        <div class="row col-md-6 mb-3">
+            <label class="col-md-6 col-form-label fs-2">Mobile</label>
+
+            <div class="col-md-6">
+                <input type="tel" class="form-control fs-2" name="Mobile" id="Mobile" pattern="[6789][0-9]{9}">
+                <div class="invalid-feedback">
+                    Should not be empty!
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="row col-md-6 mb-3">
+            <label class="col-md-6 col-form-label fs-2">Garments</label>
+
+            <div class="col-md-6">
+                <input type="text" class="form-control fs-2" name="Garments" id="Garments" aria-describedby="emailHelp"
+                    required="">
+                <div class="invalid-feedback">
+                    Should not be empty!
+                </div>
+
+            </div>
+        </div>
+        <div class="row col-md-6 mb-3">
+            <label class="col-md-6 col-form-label fs-2">Weight</label>
+
+            <div class="col-md-6">
+                <input type="number" class="form-control fs-2" name="Weight" id="Weight" aria-describedby="emailHelp"
+                    required="">
+                <div class="invalid-feedback">
+                    Should not be empty!
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row col-md-6 mb-3">
+            <label class="col-md-6 col-form-label fs-2">Amount</label>
+
+            <div class="col-md-6">
+                <input type="number" class="form-control fs-2" name="Amount" id="Amount" aria-describedby="emailHelp"
+                    required="">
+                <div class="invalid-feedback">
+                    Should not be empty!
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input fs-5" id="exampleCheck1">
+                <label class="form-check-label fs-5" for="exampleCheck1">Check me out</label>
+            </div>
+            <button class="btn btn-success fs-3" onclick="KSGlobalClientSideFuncs.Booking.JSFuncs.Insert()">Save</button>
+
+        </div>
+
+    </div>
+</form>
+
+<button type="button" class="btn btn-primary" onclick="KSGlobalClientSideFuncsClass.Booking.ApiFuncs.Show()" >ShowData</button>
