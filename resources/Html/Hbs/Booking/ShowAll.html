@@ -1,13 +1,14 @@
 <div class="table-responsive">
-    <table class="table">
+
+    <table class="table fs-3">
         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Customer Name</th>
-                <th scope="col">Mobile</th>
-                <th scope="col">Garments</th>
-                <th scope="col">Weight</th>
-                <th scope="col">Amount</th>
+                <th scope="col" width="5%" >#</th>
+                <th scope="col" width="25%">Customer Name</th>
+                <th scope="col"  width="20%">Mobile</th>
+                <th scope="col" Width="25%">Garments</th>
+                <th scope="col" width="10%" style="text-align:right">Weight</th>
+                <th scope="col" width="10%" style="text-align:right">Amount</th>
 
 
             </tr>
@@ -21,10 +22,10 @@
                 <td>{{value.CustomerName}}</td>
                 <td>{{value.Mobile}}</td>
                 <td>{{value.Garments}}</td>
-                <td>{{value.Weight}}</td>
-                <td>{{ShowInIndianDateFormat value.Amount}}</td>
+                <td style="text-align:right">{{value.Weight}}</td>
+                <td style="text-align:right">{{ShowInIndianDateFormat value.Amount}}</td>
             
-                <td>{{key}}</td>
+                <!-- <td>{{key}}</td> -->
             </tr>
             {{/each}}
 
