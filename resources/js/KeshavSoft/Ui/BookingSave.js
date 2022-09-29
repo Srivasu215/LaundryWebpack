@@ -56,6 +56,28 @@ class KSGlobalClientSideFuncsClass {
             }
         },
         ApiFuncs: {
+            ShowAll: async (inEvent) => {
+                if ((inEvent === undefined) === false) {
+                    let jVarLocalCurrentTarget = inEvent.currentTarget;
+                    this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
+                };
+
+                let jVarLocalFromTemplate = await this.Booking.HtmlFuns.Templates.ShowAll();
+                let jVarLocalKCont1 = document.getElementById("KCont1");
+                jVarLocalKCont1.innerHTML = jVarLocalFromTemplate;
+
+                let jVarLocalDataNeeded = await this.Booking.JSFuncs.Show();
+                let jVarLocalFromHbs = await this.Booking.HtmlFuns.Hbs.Row();
+
+                if (jVarLocalDataNeeded.KTF === false) {
+
+                };
+
+                var template = Handlebars.compile(jVarLocalFromHbs);
+                let jVarLocalHtml = template(jVarLocalDataNeeded.JsonData);
+
+                document.getElementById("KTableBody").innerHTML = jVarLocalHtml;
+            },
             Show: async (inEvent) => {
                 if ((inEvent === undefined) === false) {
                     let jVarLocalCurrentTarget = inEvent.currentTarget;
@@ -65,7 +87,7 @@ class KSGlobalClientSideFuncsClass {
                 await this.Booking.HtmlFuns.Templates.Show();
                 let jVarLocalDataNeeded = await this.Booking.JSFuncs.Show();
                 let jVarLocalFromHbs = await this.Booking.HtmlFuns.Hbs.Row();
-                
+
                 if (jVarLocalDataNeeded.KTF === false) {
 
                 };
@@ -117,7 +139,14 @@ class KSGlobalClientSideFuncsClass {
                     let response = await fetch(jVarLocalFetchUrl);
                     let data = await response.text();
                     return await data;
-                }
+                },
+                ShowAll: async () => {
+                    let jVarLocalFetchUrl = "Templates/Booking/ShowAll.html";
+                    let response = await fetch(jVarLocalFetchUrl);
+                    let data = await response.text();
+                    return await data;
+                },
+
             },
             Hbs: {
                 Row: async () => {
@@ -148,7 +177,7 @@ class KSGlobalClientSideFuncsClass {
                                     LoopElement.classList.add(jVarLocalWhiteClassName);
                                 };
                             });
-                            
+
                             inHtmlControl.classList.remove(jVarLocalWhiteClassName);
                             inHtmlControl.classList.add(jVarLocalClassName);
                         }
