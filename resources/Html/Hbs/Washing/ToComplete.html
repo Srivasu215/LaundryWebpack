@@ -1,0 +1,33 @@
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Garments</th>
+                <th scope="col">Weight</th>
+                <th scope="col">Amount</th>
+
+
+            </tr>
+        </thead>
+        <tbody id="KTableBody">
+
+            {{#each this}}
+            {{log "ssssssss" value}}
+            <tr>
+                <td>{{SNo}}</td>
+                <td>{{value.CustomerName}}</td>
+                <td>{{value.Mobile}}</td>
+                <td>{{value.Garments}}</td>
+                <td>{{value.Weight}}</td>
+                <td>{{ShowInIndianDateFormat value.Amount}}</td>
+            
+                <td>{{key}}</td>
+            </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+</div>
