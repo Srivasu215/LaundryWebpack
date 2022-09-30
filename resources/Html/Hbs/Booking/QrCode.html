@@ -8,19 +8,19 @@
                 <th scope="col" Width="20%">Garments</th>
                 <th scope="col" width="10%" style="text-align:right">Weight</th>
                 <th scope="col" width="10%" style="text-align:right">Amount</th>
-                <th scope="col" width="15%" style="text-align:right" >QrCode</th>
+                <th scope="col" width="15%"></th>
             </tr>
         </thead>
         <tbody id="KTableBody">
             {{#each this}}
-            <tr>
+            <tr data-qrcode="{{key}}">
                 <td>{{SNo}}</td>
                 <td>{{value.CustomerName}}</td>
                 <td>{{value.Mobile}}</td>
                 <td>{{value.Garments}}</td>
                 <td style="text-align:right">{{value.Weight}}</td>
                 <td style="text-align:right">{{ShowInIndianDateFormat value.Amount}}</td>
-                <td style="text-align:right"><button type="button" class="btn btn-primary" onclick="KSGlobalBookingClass.ApiFuncs.QrCode.ToModal({inRowPK:'{{key}}'})">
+                <td style="text-align:right"><button type="button" class="btn btn-primary QrCodeButtonClass">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-qr-code" viewBox="0 0 16 16">
                             <path d="M2 2h2v2H2V2Z" />

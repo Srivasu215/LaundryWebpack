@@ -95,6 +95,27 @@ class KSGlobalBookingClass {
             });
         },
         QrCode: {
+            ShowAll: async (inEvent) => {
+                if ((inEvent === undefined) === false) {
+                    let jVarLocalCurrentTarget = inEvent.currentTarget;
+                    this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
+                };
+
+                let jVarLocalFromTemplate = await this.HtmlFuns.Hbs.QrCode();
+
+                var template = Handlebars.compile(jVarLocalFromTemplate);
+
+                let jVarLocalDataNeeded = await this.JSFuncs.Show();
+
+                if (jVarLocalDataNeeded.KTF === false) {
+
+                };
+
+                let jVarLocalHtml = template(jVarLocalDataNeeded.JsonData);
+
+                document.getElementById("KCont1").innerHTML = jVarLocalHtml;
+                this.ApiFuncs.QrCode.CommonFuncs.AddListeners();
+            },
             ToModal: async ({ inRowPK }) => {
                 let jVarLocalDataNeeded = await DalBookingFuncsClass.PickFunc({ inRowPK });
                 console.log("jVarLocalDataNeeded : ", jVarLocalDataNeeded);
@@ -121,6 +142,20 @@ class KSGlobalBookingClass {
                     myModal.show();
                 };
 
+            },
+            CommonFuncs: {
+                AddListeners: () => {
+                    let jVarLocalQrCodeButtonClass = document.getElementsByClassName("QrCodeButtonClass");
+
+                    for (var i = 0; i < jVarLocalQrCodeButtonClass.length; i++) {
+                        jVarLocalQrCodeButtonClass[i].addEventListener('click', async (inEvent) => {
+                            let jVarInsideCurrentTarget = inEvent.currentTarget;
+                            let jVarInsideClosestTr = jVarInsideCurrentTarget.closest("tr");
+                            let jVarInsideQrCodeValue = jVarInsideClosestTr.dataset.qrcode;
+                            this.ApiFuncs.QrCode.ToModal({ inRowPK: jVarInsideQrCodeValue });
+                        });
+                    };
+                }
             }
         },
         ShowDataForDelete: async (inEvent) => {
@@ -194,8 +229,9 @@ class KSGlobalBookingClass {
                 let jVarLocalBookingHeaderShowAllId = document.getElementById("BookingHeaderShowAllId");
 
                 let jVarLocalBookingHeaderInsertId = document.getElementById("BookingHeaderInsertId");
+                let jVarLocalBookingHeaderQrCodeId = document.getElementById("BookingHeaderQrCodeId");
 
-                
+
                 jVarLocalHomeId.addEventListener("click", async () => {
                     //await this.ApiFuncs.Header.MenuItemClick.HomeClick();
 
@@ -205,7 +241,7 @@ class KSGlobalBookingClass {
                     jVarLocalKCont1.innerHTML = "";
                 });
 
-                
+
                 jVarLocalBookingHeaderTodayId.addEventListener("click", async () => {
                     await this.ApiFuncs.Show();
                 });
@@ -213,11 +249,16 @@ class KSGlobalBookingClass {
                 jVarLocalBookingHeaderShowAllId.addEventListener("click", async () => {
                     await this.ApiFuncs.ShowAll();
                 });
-                
+
                 jVarLocalBookingHeaderInsertId.addEventListener("click", async () => {
                     await this.ApiFuncs.Insert();
                 });
-                
+
+                jVarLocalBookingHeaderQrCodeId.addEventListener("click", async () => {
+                    await this.ApiFuncs.QrCode.ShowAll();
+                });
+
+
             },
             MenuItemClick:
             {
