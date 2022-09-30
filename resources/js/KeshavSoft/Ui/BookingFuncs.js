@@ -193,8 +193,9 @@ class KSGlobalBookingClass {
                 let jVarLocalBookingHeaderTodayId = document.getElementById("BookingHeaderTodayId");
                 let jVarLocalBookingHeaderShowAllId = document.getElementById("BookingHeaderShowAllId");
 
-                
+                let jVarLocalBookingHeaderInsertId = document.getElementById("BookingHeaderInsertId");
 
+                
                 jVarLocalHomeId.addEventListener("click", async () => {
                     //await this.ApiFuncs.Header.MenuItemClick.HomeClick();
 
@@ -211,6 +212,10 @@ class KSGlobalBookingClass {
 
                 jVarLocalBookingHeaderShowAllId.addEventListener("click", async () => {
                     await this.ApiFuncs.ShowAll();
+                });
+                
+                jVarLocalBookingHeaderInsertId.addEventListener("click", async () => {
+                    await this.ApiFuncs.Insert();
                 });
                 
             },
