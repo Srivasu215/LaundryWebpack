@@ -47,15 +47,15 @@ class DalBookingFuncsClass {
 
             let LocalCustomersData = await Neutralino.filesystem.readFile(LocalFileName);
             let LocalCustomersDataAsJson = JSON.parse(LocalCustomersData);
-            console.log('LocalCustomersDataAsJson : ', LocalCustomersDataAsJson);
+            
             let LocalCollectionData = Object.keys(LocalCustomersDataAsJson).map(key => ({ key, value: LocalCustomersDataAsJson[key] }));
-            console.log('LocalCollectionData : ', LocalCollectionData);
+            
             let LocalFilteredData = _.filter(LocalCollectionData, (LoopItem) => {
                 if ("DateTime" in LoopItem.value) {
                     return LoopItem.value.DateTime.substring(0, 10) === this.CommonFuns.GetDateOnly();
                 };
             });
-            console.log('LocalFilteredData : ', LocalFilteredData);
+
             LocalReturnObject.JsonData = LocalFilteredData;
             LocalReturnObject.KTF = true;
         } catch (error) {
