@@ -47,9 +47,9 @@ class DalBookingFuncsClass {
 
             let LocalCustomersData = await Neutralino.filesystem.readFile(LocalFileName);
             let LocalCustomersDataAsJson = JSON.parse(LocalCustomersData);
-            
+
             let LocalCollectionData = Object.keys(LocalCustomersDataAsJson).map(key => ({ key, value: LocalCustomersDataAsJson[key] }));
-            
+
             let LocalFilteredData = _.filter(LocalCollectionData, (LoopItem) => {
                 if ("DateTime" in LoopItem.value) {
                     return LoopItem.value.DateTime.substring(0, 10) === this.CommonFuns.GetDateOnly();
@@ -74,7 +74,7 @@ class DalBookingFuncsClass {
 
             let LocalCustomersData = await Neutralino.filesystem.readFile(LocalFileName);
             let LocalCustomersDataAsJson = JSON.parse(LocalCustomersData);
-            
+
             let LocalCollectionData = Object.keys(LocalCustomersDataAsJson).map(key => ({ key, value: LocalCustomersDataAsJson[key] }));
 
             let LocalFilteredData = _.filter(LocalCollectionData, (LoopItem) => {
@@ -82,7 +82,7 @@ class DalBookingFuncsClass {
                     return LoopItem.value.DateTime.substring(0, 10) === this.CommonFuns.GetDateOnly();
                 };
             });
-            
+
             LocalReturnObject.JsonData = LocalFilteredData;
             LocalReturnObject.KTF = true;
         } catch (error) {
@@ -94,17 +94,17 @@ class DalBookingFuncsClass {
 
     static PickFunc = async ({ inRowPK }) => {
         let LocalJsonFileName = "Bookings.json";
-    
+
         let LocalReturnObject = { KTF: false, KResult: "" };
-    
+
         let LocalCustomersData = await Neutralino.filesystem.readFile(`./KData/JSON/2017/${LocalJsonFileName}`);
         let LocalCustomersDataAsJson = JSON.parse(LocalCustomersData);
-        
+
         if (inRowPK in LocalCustomersDataAsJson) {
             LocalReturnObject.KTF = true;
             LocalReturnObject.KResult = LocalCustomersDataAsJson[inRowPK];
         };
-    
+
         return await LocalReturnObject;
     };
     static CommonFuns = {
@@ -132,3 +132,5 @@ class DalBookingFuncsClass {
         }
     }
 };
+
+export { DalBookingFuncsClass }

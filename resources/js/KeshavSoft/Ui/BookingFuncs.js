@@ -1,45 +1,12 @@
 import { KSGlobalMenuClass } from "./MenuFuncs";
+import { DalBookingFuncsClass } from "../../../Dal/Bookings/JsonFuncs";
 
 class KSGlobalBookingClass {
     static JSFuncs = {
-        Insert: async () => {
-            let jVarLocalFormVertical = document.getElementById("FormVertical");
-
-            jVarLocalFormVertical.classList.remove('was-validated');
-            jVarLocalFormVertical.classList.add('novalidate');
-
-            if (jVarLocalFormVertical.checkValidity()) {
-                let PromiseDataFromSave = await DalFuncsClass.Booking.InsertFunc({ inObjectToInsert: serializeObject(jVarLocalFormVertical) });
-
-                if (PromiseDataFromSave.KTF) {
-                    let jVarLocalAlertSuccessId = document.getElementById("AlertSuccessId");
-                    let jVarLocalAlertSuccessMessageId = document.getElementById("AlertSuccessMessageId");
-                    jVarLocalAlertSuccessId.style.display = "";
-                    jVarLocalAlertSuccessMessageId.innerHTML = `<strong>Hurray!</strong> ${PromiseDataFromSave.KResult}`
-
-                    setTimeout(function () {
-                        jVarLocalAlertSuccessId.style.display = "none"
-
-                    }, 7000);
-                } else {
-                    let jVarLocalAlertDangerId = document.getElementById("AlertWarningId");
-                    let jVarLocalAlertDangerMessageId = document.getElementById("AlertWarningMessageId");
-                    jVarLocalAlertDangerId.style.display = "";
-                    jVarLocalAlertDangerMessageId.innerHTML = `<strong>Sorry!</strong> ${PromiseDataFromSave.KReason}`
-
-                    setTimeout(function () {
-                        jVarLocalAlertDangerId.style.display = "none"
-
-                    }, 7000);
-                };
-            } else {
-                document.forms[1].classList.add('was-validated');
-            };
-        },
         Show: async () => {
             let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
 
-            let LocalDataFromJson = await DalFuncsClass.Booking.ShowTodayFunc();
+            let LocalDataFromJson = await DalBookingFuncsClass.ShowTodayFunc();
             let LocalSNo = 1;
 
             Object.entries(LocalDataFromJson.JsonData).forEach(
@@ -77,6 +44,40 @@ class KSGlobalBookingClass {
     };
 
     static ApiFuncs = {
+        SaveFunc: async () => {
+            let jVarLocalFormVertical = document.getElementById("FormVertical");
+
+            jVarLocalFormVertical.classList.remove('was-validated');
+            jVarLocalFormVertical.classList.add('novalidate');
+
+            if (jVarLocalFormVertical.checkValidity()) {
+                let PromiseDataFromSave = await DalBookingFuncsClass.InsertFunc({ inObjectToInsert: this.CommonFuncs.serializeObject(jVarLocalFormVertical) });
+
+                if (PromiseDataFromSave.KTF) {
+                    let jVarLocalAlertSuccessId = document.getElementById("AlertSuccessId");
+                    let jVarLocalAlertSuccessMessageId = document.getElementById("AlertSuccessMessageId");
+                    jVarLocalAlertSuccessId.style.display = "";
+                    jVarLocalAlertSuccessMessageId.innerHTML = `<strong>Hurray!</strong> ${PromiseDataFromSave.KResult}`
+
+                    setTimeout(function () {
+                        jVarLocalAlertSuccessId.style.display = "none"
+
+                    }, 7000);
+                } else {
+                    let jVarLocalAlertDangerId = document.getElementById("AlertWarningId");
+                    let jVarLocalAlertDangerMessageId = document.getElementById("AlertWarningMessageId");
+                    jVarLocalAlertDangerId.style.display = "";
+                    jVarLocalAlertDangerMessageId.innerHTML = `<strong>Sorry!</strong> ${PromiseDataFromSave.KReason}`
+
+                    setTimeout(function () {
+                        jVarLocalAlertDangerId.style.display = "none"
+
+                    }, 7000);
+                };
+            } else {
+                document.forms[1].classList.add('was-validated');
+            };
+        },
         Insert: async (inEvent) => {
             if ((inEvent === undefined) === false) {
                 let jVarLocalCurrentTarget = inEvent.currentTarget;
@@ -87,6 +88,11 @@ class KSGlobalBookingClass {
 
             let jVarLocalKCont1 = document.getElementById("KCont1");
             jVarLocalKCont1.innerHTML = jVarLocalFromHbs;
+
+            let jVarLocalBookingSaveButtonId = document.getElementById("BookingSaveButtonId");
+            jVarLocalBookingSaveButtonId.addEventListener("click", async () => {
+                await this.ApiFuncs.SaveFunc();
+            });
         },
         QrCode: {
             ToModal: async ({ inRowPK }) => {
@@ -143,11 +149,11 @@ class KSGlobalBookingClass {
                 this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
             };
 
-            let jVarLocalFromTemplate = await this.Booking.HtmlFuns.Hbs.ShowAll();
+            let jVarLocalFromTemplate = await this.HtmlFuns.Hbs.ShowAll();
 
             var template = Handlebars.compile(jVarLocalFromTemplate);
 
-            let jVarLocalDataNeeded = await this.Booking.JSFuncs.Show();
+            let jVarLocalDataNeeded = await this.JSFuncs.Show();
 
             if (jVarLocalDataNeeded.KTF === false) {
 
@@ -184,13 +190,29 @@ class KSGlobalBookingClass {
                 jVarLocalKCont1.innerHTML = jVarLocalFromHbs;
 
                 let jVarLocalHomeId = document.getElementById("HomeId");
-                console.log("jVarLocalHomeId : ", jVarLocalHomeId);
+                let jVarLocalBookingHeaderTodayId = document.getElementById("BookingHeaderTodayId");
+                let jVarLocalBookingHeaderShowAllId = document.getElementById("BookingHeaderShowAllId");
+
+                
+
                 jVarLocalHomeId.addEventListener("click", async () => {
                     //await this.ApiFuncs.Header.MenuItemClick.HomeClick();
 
                     await KSGlobalMenuClass.ApiFuncs.Header.BuildMenu();
 
+                    let jVarLocalKCont1 = document.getElementById("KCont1");
+                    jVarLocalKCont1.innerHTML = "";
                 });
+
+                
+                jVarLocalBookingHeaderTodayId.addEventListener("click", async () => {
+                    await this.ApiFuncs.Show();
+                });
+
+                jVarLocalBookingHeaderShowAllId.addEventListener("click", async () => {
+                    await this.ApiFuncs.ShowAll();
+                });
+                
             },
             MenuItemClick:
             {
@@ -269,6 +291,21 @@ class KSGlobalBookingClass {
     };
 
     static CommonFuncs = {
+        serializeObject: (form) => {
+            // Create a new FormData object
+            const formData = new FormData(form);
+
+            // Create an object to hold the name/value pairs
+            const pairs = {};
+
+            // Add each name/value pair to the object
+            for (const [name, value] of formData) {
+                pairs[name] = value;
+            }
+
+            // Return the object
+            return pairs;
+        },
         QrCode: {
             GenerateQrCodeOnCanvas: ({ inQrData = "" }) => {
                 var canvas = document.getElementById('canvas');

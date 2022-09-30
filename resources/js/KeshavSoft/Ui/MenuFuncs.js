@@ -1,19 +1,33 @@
+import { KSGlobalBookingClass } from "./BookingFuncs";
+
 class KSGlobalMenuClass {
     static ApiFuncs = {
         Header: {
             BuildMenu: async () => {
+              
                 let jVarLocalFromHbs = await this.HtmlFuns.Templates.Header.BuildMenu();
 
                 let jVarLocalKHeader = document.getElementById("KHeader");
                 jVarLocalKHeader.innerHTML = jVarLocalFromHbs;
-                let jVarLocalKCont1 = document.getElementById("KCont1");
-                jVarLocalKCont1.innerHTML = "";
+                let jVarLocalBookingId = document.getElementById("BookingId");
+
+                console.log("jVarLocalBookingId : ", jVarLocalBookingId);
+                jVarLocalBookingId.addEventListener("click", async () => {
+                    //await this.ApiFuncs.Header.MenuItemClick.HomeClick();
+
+                    await this.ApiFuncs.Header.MenuItemClick.Booking();
+
+                    // let jVarLocalKCont1 = document.getElementById("KCont1");
+                    // jVarLocalKCont1.innerHTML = "";
+                });
             },
             MenuItemClick:
             {
                 Booking: async () => {
-                    KSGlobalClientSideFuncsClass.Booking.ApiFuncs.Header.ShowinDOM();
-                    KSGlobalClientSideFuncsClass.Booking.ApiFuncs.Insert();
+                    console.log("KSGlobalBookingClass : ", KSGlobalBookingClass);
+
+                    KSGlobalBookingClass.ApiFuncs.Header.ShowinDOM();
+                    KSGlobalBookingClass.ApiFuncs.Insert();
                 }
             }
         }
