@@ -1,0 +1,20 @@
+{
+  "name": "laundry",
+  "version": "1.0.0",
+  "description": "Neutralinojs app for laundry management",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keshavsoft/Laundry.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/keshavsoft/Laundry/issues"
+  },
+  "homepage": "https://github.com/keshavsoft/Laundry#readme"
+}
