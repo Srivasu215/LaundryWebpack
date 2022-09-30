@@ -1,3 +1,5 @@
+import { KSGlobalMenuClass } from "./MenuFuncs";
+
 class KSGlobalBookingClass {
     static JSFuncs = {
         Insert: async () => {
@@ -75,7 +77,17 @@ class KSGlobalBookingClass {
     };
 
     static ApiFuncs = {
+        Insert: async (inEvent) => {
+            if ((inEvent === undefined) === false) {
+                let jVarLocalCurrentTarget = inEvent.currentTarget;
+                this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
+            };
 
+            let jVarLocalFromHbs = await this.HtmlFuns.Templates.Insert();
+
+            let jVarLocalKCont1 = document.getElementById("KCont1");
+            jVarLocalKCont1.innerHTML = jVarLocalFromHbs;
+        },
         QrCode: {
             ToModal: async ({ inRowPK }) => {
                 let jVarLocalDataNeeded = await DalBookingFuncsClass.PickFunc({ inRowPK });
@@ -170,6 +182,15 @@ class KSGlobalBookingClass {
 
                 let jVarLocalKCont1 = document.getElementById("KHeader");
                 jVarLocalKCont1.innerHTML = jVarLocalFromHbs;
+
+                let jVarLocalHomeId = document.getElementById("HomeId");
+                console.log("jVarLocalHomeId : ", jVarLocalHomeId);
+                jVarLocalHomeId.addEventListener("click", async () => {
+                    //await this.ApiFuncs.Header.MenuItemClick.HomeClick();
+
+                    await KSGlobalMenuClass.ApiFuncs.Header.BuildMenu();
+
+                });
             },
             MenuItemClick:
             {
@@ -308,3 +329,5 @@ class KSGlobalBookingClass {
         }
     }
 };
+
+export { KSGlobalBookingClass };
