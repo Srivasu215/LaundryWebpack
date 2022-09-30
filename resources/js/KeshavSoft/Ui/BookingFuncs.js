@@ -53,10 +53,10 @@ class KSGlobalBookingClass {
             return await LocalReturnObject;
 
         },
-        Delete: async () => {
+        ShowDataForDelete: async () => {
             let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
 
-            let LocalDataFromJson = await DalFuncsClass.Booking.DeleteFunc();
+            let LocalDataFromJson = await DalFuncsClass.Booking.ShowDataForDelete();
             let LocalSNo = 1;
 
             Object.entries(LocalDataFromJson.JsonData).forEach(
@@ -105,13 +105,13 @@ class KSGlobalBookingClass {
 
             }
         },
-        Delete: async (inEvent) => {
+        ShowDataForDelete: async (inEvent) => {
             if ((inEvent === undefined) === false) {
                 let jVarLocalCurrentTarget = inEvent.currentTarget;
                 this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
             };
 
-            let jVarLocalFromTemplate = await this.Booking.HtmlFuns.Hbs.Delete();
+            let jVarLocalFromTemplate = await this.Booking.HtmlFuns.Hbs.ShowDataForDelete();
 
             var template = Handlebars.compile(jVarLocalFromTemplate);
 
@@ -238,7 +238,7 @@ class KSGlobalBookingClass {
                 let data = await response.text();
                 return await data;
             },
-            Delete: async () => {
+            ShowDataForDelete: async () => {
                 let jVarLocalFetchUrl = "Hbs/Booking/Delete.html";
                 let response = await fetch(jVarLocalFetchUrl);
                 let data = await response.text();
