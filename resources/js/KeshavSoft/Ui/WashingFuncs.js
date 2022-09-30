@@ -37,7 +37,26 @@ class KSGlobalWashingClass {
         Show: async () => {
             let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
 
-            let LocalDataFromJson = await DalFuncsClass.Booking.ShowTodayFunc();
+            let LocalDataFromJson = await DalWashingClass.ShowTodayFunc();
+            let LocalSNo = 1;
+
+            Object.entries(LocalDataFromJson.JsonData).forEach(
+                ([key, value]) => {
+                    LocalReturnObject.JsonData[key] = value;
+                    LocalReturnObject.JsonData[key].SNo = LocalSNo;
+                    LocalSNo += 1;
+                }
+            );
+
+            LocalReturnObject.KTF = true;
+
+            return await LocalReturnObject;
+
+        },
+        Update: async () => {
+            let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
+
+            let LocalDataFromJson = await DalWashingClass.UpdateFunc();
             let LocalSNo = 1;
 
             Object.entries(LocalDataFromJson.JsonData).forEach(
@@ -56,17 +75,17 @@ class KSGlobalWashingClass {
     };
 
     static ApiFuncs = {
-        ShowAll: async (inEvent) => {
+        Update: async (inEvent) => {
             if ((inEvent === undefined) === false) {
                 let jVarLocalCurrentTarget = inEvent.currentTarget;
                 this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
             };
 
-            let jVarLocalFromTemplate = await this.Booking.HtmlFuns.Hbs.ShowAll();
+            let jVarLocalFromTemplate = await this.HtmlFuns.Hbs.Update();
 
             var template = Handlebars.compile(jVarLocalFromTemplate);
 
-            let jVarLocalDataNeeded = await this.Booking.JSFuncs.Show();
+            let jVarLocalDataNeeded = await this.JSFuncs.Update();
 
             if (jVarLocalDataNeeded.KTF === false) {
 
@@ -77,6 +96,26 @@ class KSGlobalWashingClass {
             document.getElementById("KCont1").innerHTML = jVarLocalHtml;
         },
         Show: async (inEvent) => {
+            if ((inEvent === undefined) === false) {
+                let jVarLocalCurrentTarget = inEvent.currentTarget;
+                this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
+            };
+
+            let jVarLocalFromTemplate = await this.HtmlFuns.Hbs.Show();
+
+            var template = Handlebars.compile(jVarLocalFromTemplate);
+
+            let jVarLocalDataNeeded = await this.JSFuncs.Show();
+
+            if (jVarLocalDataNeeded.KTF === false) {
+
+            };
+
+            let jVarLocalHtml = template(jVarLocalDataNeeded.JsonData);
+
+            document.getElementById("KCont1").innerHTML = jVarLocalHtml;
+        },
+        Show1: async (inEvent) => {
             if ((inEvent === undefined) === false) {
                 let jVarLocalCurrentTarget = inEvent.currentTarget;
                 this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
@@ -145,8 +184,14 @@ class KSGlobalWashingClass {
                 let data = await response.text();
                 return await data;
             },
-            ShowAll: async () => {
+            Show: async () => {
                 let jVarLocalFetchUrl = "Hbs/Booking/ShowAll.html";
+                let response = await fetch(jVarLocalFetchUrl);
+                let data = await response.text();
+                return await data;
+            },
+            Update: async () => {
+                let jVarLocalFetchUrl = "Hbs/Washing/ToComplete.html";
                 let response = await fetch(jVarLocalFetchUrl);
                 let data = await response.text();
                 return await data;
