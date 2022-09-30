@@ -65,6 +65,33 @@ class DalBookingFuncsClass {
         return await LocalReturnObject;
     };
 
+    static ShowDataForDelete = async () => {
+        let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
+
+        try {
+            let LocalJsonFileName = "Bookings.json";
+            let LocalFileName = `./KData/JSON/2017/${LocalJsonFileName}`;
+
+            let LocalCustomersData = await Neutralino.filesystem.readFile(LocalFileName);
+            let LocalCustomersDataAsJson = JSON.parse(LocalCustomersData);
+            console.log('LocalCustomersDataAsJson : ', LocalCustomersDataAsJson);
+            let LocalCollectionData = Object.keys(LocalCustomersDataAsJson).map(key => ({ key, value: LocalCustomersDataAsJson[key] }));
+            console.log('LocalCollectionData : ', LocalCollectionData);
+            let LocalFilteredData = _.filter(LocalCollectionData, (LoopItem) => {
+                if ("DateTime" in LoopItem.value) {
+                    return LoopItem.value.DateTime.substring(0, 10) === this.CommonFuns.GetDateOnly();
+                };
+            });
+            console.log('LocalFilteredData : ', LocalFilteredData);
+            LocalReturnObject.JsonData = LocalFilteredData;
+            LocalReturnObject.KTF = true;
+        } catch (error) {
+            //LocalReturnObject.KError =`${LocalFileName} `;
+            LocalReturnObject.KError = error;
+        };
+        return await LocalReturnObject;
+    };
+
     static PickFunc = async ({ inRowPK }) => {
         let LocalJsonFileName = "Bookings.json";
     
@@ -80,7 +107,6 @@ class DalBookingFuncsClass {
     
         return await LocalReturnObject;
     };
-    
     static CommonFuns = {
         toNumbers: arr => arr.map(Number),
         LocalGetDate: () => {
