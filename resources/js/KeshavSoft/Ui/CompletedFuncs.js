@@ -1,4 +1,7 @@
-class KSGlobalWashingClass {
+import { KSGlobalMenuClass } from "./MenuFuncs";
+import { DalCompletedClass } from "../../../Dal/Completed/JsonFuncs";
+
+class KSGlobalWashingCompletedClass {
     static JSFuncs = {
         Insert: async () => {
             let jVarLocalFormVertical = document.getElementById("FormVertical");
@@ -7,7 +10,7 @@ class KSGlobalWashingClass {
             jVarLocalFormVertical.classList.add('novalidate');
 
             if (jVarLocalFormVertical.checkValidity()) {
-                let PromiseDataFromSave = await DalFuncsClass.Booking.InsertFunc({ inObjectToInsert: serializeObject(jVarLocalFormVertical) });
+                let PromiseDataFromSave = await DalCompletedClass.Booking.InsertFunc({ inObjectToInsert: serializeObject(jVarLocalFormVertical) });
 
                 if (PromiseDataFromSave.KTF) {
                     let jVarLocalAlertSuccessId = document.getElementById("AlertSuccessId");
@@ -37,7 +40,7 @@ class KSGlobalWashingClass {
         Show: async () => {
             let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
 
-            let LocalDataFromJson = await DalWashingClass.ShowTodayFunc();
+            let LocalDataFromJson = await DalCompletedClass.ShowTodayFunc();
             let LocalSNo = 1;
 
             Object.entries(LocalDataFromJson.JsonData).forEach(
@@ -106,7 +109,7 @@ class KSGlobalWashingClass {
             var template = Handlebars.compile(jVarLocalFromTemplate);
 
             let jVarLocalDataNeeded = await this.JSFuncs.Show();
-
+            console.log("jVarLocalDataNeeded : ", jVarLocalDataNeeded);
             if (jVarLocalDataNeeded.KTF === false) {
 
             };
@@ -136,11 +139,24 @@ class KSGlobalWashingClass {
         },
         Header: {
             ShowinDOM: async () => {
-                let jVarLocalFromHbs = await this.Booking.HtmlFuns.Templates.Header.PullFunc();
-
+                let jVarLocalFromHbs = await this.HtmlFuns.Templates.Header.PullFunc();
                 let jVarLocalKCont1 = document.getElementById("KHeader");
                 jVarLocalKCont1.innerHTML = jVarLocalFromHbs;
+                this.ApiFuncs.Header.CommonFuncs.AddListeners();
             },
+            CommonFuncs: {
+                AddListeners: () => {
+                    let jVarLocalHomeId = document.getElementById("HomeId");
+                    
+                    jVarLocalHomeId.addEventListener("click", async () => {
+                        await KSGlobalMenuClass.ApiFuncs.Header.BuildMenu();
+
+                        let jVarLocalKCont1 = document.getElementById("KCont1");
+                        jVarLocalKCont1.innerHTML = "";
+                    });
+
+                }
+            }
         }
     };
 
@@ -148,7 +164,7 @@ class KSGlobalWashingClass {
         Templates: {
             Header: {
                 PullFunc: async () => {
-                    let jVarLocalFetchUrl = "Templates/Booking/Header.html";
+                    let jVarLocalFetchUrl = "Templates/Completed/Header.html";
                     let response = await fetch(jVarLocalFetchUrl);
                     let data = await response.text();
                     return await data;
@@ -185,7 +201,7 @@ class KSGlobalWashingClass {
                 return await data;
             },
             Show: async () => {
-                let jVarLocalFetchUrl = "Hbs/Booking/ShowAll.html";
+                let jVarLocalFetchUrl = "Hbs/Completed/Completed.html";
                 let response = await fetch(jVarLocalFetchUrl);
                 let data = await response.text();
                 return await data;
@@ -226,3 +242,4 @@ class KSGlobalWashingClass {
         }
     }
 };
+export { KSGlobalWashingCompletedClass };

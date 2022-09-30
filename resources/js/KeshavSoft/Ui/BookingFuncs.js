@@ -233,8 +233,6 @@ class KSGlobalBookingClass {
 
 
                 jVarLocalHomeId.addEventListener("click", async () => {
-                    //await this.ApiFuncs.Header.MenuItemClick.HomeClick();
-
                     await KSGlobalMenuClass.ApiFuncs.Header.BuildMenu();
 
                     let jVarLocalKCont1 = document.getElementById("KCont1");
