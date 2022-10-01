@@ -18,14 +18,6 @@ class KSGlobalMenuClass {
                     let jVarLocalBookingId = document.getElementById("BookingId");
                     let jVarLocalWashingCompletedId = document.getElementById("WashingCompletedId");
 
-                    // jVarLocalBookingId.addEventListener("click", async () => {
-                    //     await this.ApiFuncs.Header.MenuItemClick.Booking();
-                    // });
-
-                    // jVarLocalWashingCompletedId.addEventListener("click", async () => {
-                    //     await this.ApiFuncs.Header.MenuItemClick.Completed();
-                    // });
-
                     jVarLocalBookingId.addEventListener("click", this.ApiFuncs.Header.MenuItemClick.Booking);
 
                     jVarLocalWashingCompletedId.addEventListener("click", this.ApiFuncs.Header.MenuItemClick.Completed);
@@ -42,7 +34,6 @@ class KSGlobalMenuClass {
                     KSGlobalWashingCompletedClass.ApiFuncs.Show();
                 }
             }
-
         }
     };
 

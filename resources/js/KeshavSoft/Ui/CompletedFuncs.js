@@ -119,25 +119,6 @@ class KSGlobalWashingCompletedClass {
 
             document.getElementById("KCont1").innerHTML = jVarLocalHtml;
         },
-        Show1: async (inEvent) => {
-            if ((inEvent === undefined) === false) {
-                let jVarLocalCurrentTarget = inEvent.currentTarget;
-                this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
-            };
-
-            await this.Booking.HtmlFuns.Templates.Show();
-            let jVarLocalDataNeeded = await this.Booking.JSFuncs.Show();
-            let jVarLocalFromHbs = await this.Booking.HtmlFuns.Hbs.Row();
-
-            if (jVarLocalDataNeeded.KTF === false) {
-
-            };
-
-            var template = Handlebars.compile(jVarLocalFromHbs);
-            let jVarLocalHtml = template(jVarLocalDataNeeded.JsonData);
-
-            document.getElementById("KTableBody").innerHTML = jVarLocalHtml;
-        },
         Header: {
             ShowinDOM: async () => {
                 let jVarLocalFromHbs = await this.HtmlFuns.Templates.Header.PullFunc();
@@ -159,6 +140,13 @@ class KSGlobalWashingCompletedClass {
                     let jVarLocalScanHeaderId = document.getElementById("ScanHeaderId");
 
                     jVarLocalScanHeaderId.addEventListener("click", this.ApiFuncs.Header.CommonFuncs.ClickFuncs.ScanHeaderId);
+
+
+                    let jVarLocalCompletedHeaderId= document.getElementById("CompletedHeaderId");
+
+                    //jVarLocalCompletedHeaderId.addEventListener("click", this.ApiFuncs.Header.CommonFuncs.ClickFuncs.CompletedHeaderId);
+                    jVarLocalCompletedHeaderId.addEventListener("click", this.ApiFuncs.Show);
+
                 },
                 ClickFuncs: {
                     ScanHeaderId: async () => {
@@ -168,6 +156,12 @@ class KSGlobalWashingCompletedClass {
                         jVarLocalKCont1.innerHTML = jVarInsideTemplate;
 
                         KSGlobalScanClass.ApiFuncs.AddListeners();
+                    },
+                    CompletedHeaderId: async () => {
+                        let jVarInsideTemplate = await this.HtmlFuns.Templates.Show();
+                        console.log("jVarInsideTemplate : ", jVarInsideTemplate);
+                        let jVarLocalKCont1 = document.getElementById("KCont1");
+                        jVarLocalKCont1.innerHTML = jVarInsideTemplate;
                     }
                 }
             }
