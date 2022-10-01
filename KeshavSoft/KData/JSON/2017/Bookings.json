@@ -1,1 +1,28 @@
-{}
+{
+    "1": {
+        "CustomerName": "keshav",
+        "Mobile": "9848163021",
+        "Garments": "shirt",
+        "Weight": 4,
+        "Amount": "120",
+        "DateTime": "01-10-2022-10-8-37",
+        "QrCodes": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": ""
+        }
+    },
+    "2": {
+        "CustomerName": "chakri",
+        "Mobile": "9848163021",
+        "Garments": "shirt, pant",
+        "Weight": 2,
+        "Amount": "150",
+        "DateTime": "01-10-2022-10-8-37",
+        "QrCodes": {
+            "5": "",
+            "6": ""
+        }
+    }
+}
