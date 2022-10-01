@@ -118,7 +118,34 @@ class KSGlobalBookingClass {
             },
             ToModal: async ({ inRowPK }) => {
                 let jVarLocalDataNeeded = await DalBookingFuncsClass.PickFunc({ inRowPK });
-                console.log("jVarLocalDataNeeded : ", jVarLocalDataNeeded);
+
+                if (jVarLocalDataNeeded.KTF) {
+                    let jVarLocalModalCustomerName = document.getElementById("ModalCustomerName");
+                    let jVarLocalModalPK = document.getElementById("ModalPK");
+                    let jVarLocalModalGarments = document.getElementById("ModalGarments");
+                    let jVarLocalModalWeight = document.getElementById("ModalWeight");
+                    let jVarLocalModalMobile = document.getElementById("ModalMobile");
+
+                    jVarLocalModalCustomerName.innerHTML = jVarLocalDataNeeded.KResult.CustomerName;
+                    jVarLocalModalPK.innerHTML = inRowPK;
+                    jVarLocalModalGarments.innerHTML = jVarLocalDataNeeded.KResult.Garments;
+                    jVarLocalModalWeight.innerHTML = `${jVarLocalDataNeeded.KResult.Weight} Kg.`;
+                    jVarLocalModalMobile.innerHTML = jVarLocalDataNeeded.KResult.Mobile;
+
+                    let jVarLocalQrData = `${inRowPK}/${jVarLocalDataNeeded.KResult.CustomerName}/${jVarLocalDataNeeded.KResult.Mobile}/${jVarLocalDataNeeded.KResult.Garments}/${jVarLocalDataNeeded.KResult.Weight}`;
+                    this.CommonFuncs.QrCode.GenerateQrCodeOnCanvas({ inQrData: jVarLocalQrData });
+
+                    let jVarLocalId = "ModalForQrCode";
+
+                    var myModal = new bootstrap.Modal(document.getElementById(jVarLocalId), { keyboard: true, focus: true });
+
+                    myModal.show();
+                };
+
+            },
+            ToModal1Inch: async ({ inRowPK }) => {
+                let jVarLocalDataNeeded = await DalBookingFuncsClass.PickFunc({ inRowPK });
+
                 if (jVarLocalDataNeeded.KTF) {
                     let jVarLocalModalCustomerName = document.getElementById("ModalCustomerName");
                     let jVarLocalModalPK = document.getElementById("ModalPK");

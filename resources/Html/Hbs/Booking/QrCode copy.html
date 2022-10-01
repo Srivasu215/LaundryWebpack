@@ -1,10 +1,3 @@
-<style>
-    .grid-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 20px;
-    }
-</style>
 <div class="table-responsive">
     <table class="table fs-3">
         <thead>
@@ -46,6 +39,58 @@
 
 
 <!-- Modal -->
+<div class="modal fade" id="ModalForQrCode1Inch" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="ModalBody">
+                <div class="row">
+                    <div class="col" id="ModalCustomerName"></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <canvas id="canvas" width=1 height=1 style="border:1px solid #fff;visibility:hidden"></canvas>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col" id="ModalPK">
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col" id="ModalGarments">
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col" id="ModalWeight">
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col fw-bold" id="ModalMobile">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="printJS('ModalBody', 'html')">Print</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
 <div class="modal fade" id="ModalForQrCode" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -54,39 +99,48 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="ModalBody">
-
-
-                <div style="width: 100%;">
-                    <div style="width: 50%; height: 100px; float: left;">
-                        <div class="row">
-                            <div style="font-size: x-large" class="col" id="ModalPK">
-
-                            </div>
-
-                        </div>
+                <div class="row">
+                    <div class="col">
                         <div class="row">
                             <div class="col" id="ModalCustomerName"></div>
                         </div>
                         <div class="row">
-                            <b>
-                                <div class="col" id="ModalMobile">
+                            <div class="col fw-bold" id="ModalMobile">
 
-                                </div>
-                            </b>
-                        </div>
-                    </div>
-                    <div style="margin-left: 50%; height: 100px;">
-
-                        <div class="row">
-                            <div class="col">
-                                <canvas id="canvas" width=1 height=1
-                                    style="border:1px solid #fff;visibility:hidden"></canvas>
                             </div>
 
                         </div>
                     </div>
+                    <div class="col">
+
+                    </div>
                 </div>
 
+
+                <div class="row">
+                    <div class="col">
+                        <canvas id="canvas" width=1 height=1 style="border:1px solid #fff;visibility:hidden"></canvas>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col" id="ModalPK">
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col" id="ModalGarments">
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col" id="ModalWeight">
+
+                    </div>
+
+                </div>
 
             </div>
             <div class="modal-footer">
