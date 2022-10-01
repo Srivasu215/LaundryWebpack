@@ -129,20 +129,27 @@
 
 	<script>
 		let jFGarmentsFirstRow = () => {
+			let jVarLocalReturnObject = { KTF: false, KResult: {} };
+
 			let jVarLocalGarments1 = document.getElementById("Garments1");
 			let jVarLocalPcs1 = document.getElementById("Pcs1");
 
-			let jVarDataObject = {};
-			jVarDataObject.Garments = {};
-			jVarDataObject.Garments.FirstRow = {
+			if ((jVarLocalPcs1.value > 0) === false) {
+				jVarLocalReturnObject.KReason = "Pcs is not positive";
+				return jVarLocalReturnObject;
+			};
+
+			jVarLocalReturnObject.KTF = true;
+			
+			jVarLocalReturnObject.KResult = {
 				Name: jVarLocalGarments1.value,
 				Pcs: jVarLocalPcs1.value
 			};
 
-			console.log("jVarDataObject : ", jVarDataObject);
+			return jVarLocalReturnObject;
 		};
 
-		
+
 		let jFGarmentsSecondRow = () => {
 			let jVarLocalGarments2 = document.getElementById("Garments2");
 			let jVarLocalPcs2 = document.getElementById("Pcs2");
@@ -185,7 +192,7 @@
 			console.log("jVarDataObject : ", jVarDataObject);
 		};
 
-		
+
 		let jFGarmentsFifthRow = () => {
 			let jVarLocalGarments5 = document.getElementById("Garments5");
 			let jVarLocalPcs5 = document.getElementById("Pcs5");
@@ -200,7 +207,7 @@
 			console.log("jVarDataObject : ", jVarDataObject);
 		};
 
-		
+
 		let jFGarmentsSixthRow = () => {
 			let jVarLocalGarments6 = document.getElementById("Garments6");
 			let jVarLocalPcs6 = document.getElementById("Pcs6");
@@ -215,7 +222,7 @@
 			console.log("jVarDataObject : ", jVarDataObject);
 		};
 
-		
+
 		let jFGarmentsSeventhRow = () => {
 			let jVarLocalGarments7 = document.getElementById("Garments7");
 			let jVarLocalPcs7 = document.getElementById("Pcs7");
@@ -230,7 +237,7 @@
 			console.log("jVarDataObject : ", jVarDataObject);
 		};
 
-		
+
 		let jFGarmentsEightRow = () => {
 			let jVarLocalGarments8 = document.getElementById("Garments8");
 			let jVarLocalPcs8 = document.getElementById("Pcs8");
@@ -246,7 +253,7 @@
 		};
 
 
-		
+
 		let jFGarmentsNinethRow = () => {
 			let jVarLocalGarments9 = document.getElementById("Garments9");
 			let jVarLocalPcs9 = document.getElementById("Pcs9");
@@ -261,7 +268,7 @@
 			console.log("jVarDataObject : ", jVarDataObject);
 		};
 
-		
+
 		let jFGarmentsTenthRow = () => {
 			let jVarLocalGarments10 = document.getElementById("Garments10");
 			let jVarLocalPcs10 = document.getElementById("Pcs10");
