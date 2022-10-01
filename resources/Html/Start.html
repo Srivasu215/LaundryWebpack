@@ -116,15 +116,31 @@
 	<script src="/js/lodash.js"></script>
 
 	<script src="/js/print.min.js"></script>
-	
+
 	<script src="/js/KeshavSoft/HandleBars/HelperFuns.js"></script>
-	
+
 	<script src="/dist/bundle.js"></script>
 	<script>
 
 		Neutralino.init();
 
 
+	</script>
+
+	<script>
+		let jFGarmentsFirstRow = () => {
+			let jVarLocalGarments1 = document.getElementById("Garments1");
+			let jVarLocalPcs1 = document.getElementById("Pcs1");
+
+			let jVarDataObject = {};
+			jVarDataObject.Garments = {};
+			jVarDataObject.Garments.FirstRow = {
+				Name: jVarLocalGarments1.value,
+				Pcs: jVarLocalPcs1.value
+			};
+
+			console.log("jVarDataObject : ", jVarDataObject);
+		};
 	</script>
 </body>
 
