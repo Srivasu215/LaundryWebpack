@@ -1,3 +1,5 @@
+import { DalScanClass } from "../../../Dal/Completed/ScanFuncs";
+
 class KSGlobalScanClass {
     static JSFuncs = {
         Scan: async () => {
@@ -37,33 +39,36 @@ class KSGlobalScanClass {
     };
 
     static ApiFuncs = {
-        Header: {
-            ShowinDOM: async () => {
-                let jVarLocalFromHbs = await this.HtmlFuns.Templates.Header.PullFunc();
-                let jVarLocalKCont1 = document.getElementById("KHeader");
-                jVarLocalKCont1.innerHTML = jVarLocalFromHbs;
-                this.ApiFuncs.Header.CommonFuncs.AddListeners();
-            },
-            CommonFuncs: {
-                AddListeners: () => {
-                    let jVarLocalHomeId = document.getElementById("HomeId");
+        AddListeners: () => {
+            let jVarLocalGoButtonid = document.getElementById("GoButtonid");
 
-                    jVarLocalHomeId.addEventListener("click", async () => {
-                        await KSGlobalMenuClass.ApiFuncs.Header.BuildMenu();
+            jVarLocalGoButtonid.addEventListener("click", this.ApiFuncs.GoClick);
+        },
+        GoClick: async () => {
+            let jVarLocalScanId = document.getElementById("ScanId");
+            console.log("jVarLocalScanId  ", jVarLocalScanId.value);
+            let jVarLocalFromInsert = await DalScanClass.InsertFunc({ inQrCode: jVarLocalScanId.value });
+            console.log("jVarLocalFromInsert  ", jVarLocalFromInsert);
+        },
+        CommonFuncs: {
+            AddListeners: () => {
+                let jVarLocalHomeId = document.getElementById("HomeId");
 
-                        let jVarLocalKCont1 = document.getElementById("KCont1");
-                        jVarLocalKCont1.innerHTML = "";
-                    });
-                    let jVarLocalCompletedHeaderId = document.getElementById("CompletedHeaderId");
-                    
-                    jVarLocalCompletedHeaderId.addEventListener("click", async () => {
-                        await KSGlobalMenuClass.ApiFuncs.Header.BuildMenu();
+                jVarLocalHomeId.addEventListener("click", async () => {
+                    await KSGlobalMenuClass.ApiFuncs.Header.BuildMenu();
 
-                        let jVarLocalKCont1 = document.getElementById("KCont1");
-                        jVarLocalKCont1.innerHTML = "";
-                    });
+                    let jVarLocalKCont1 = document.getElementById("KCont1");
+                    jVarLocalKCont1.innerHTML = "";
+                });
+                let jVarLocalCompletedHeaderId = document.getElementById("CompletedHeaderId");
 
-                }
+                jVarLocalCompletedHeaderId.addEventListener("click", async () => {
+                    await KSGlobalMenuClass.ApiFuncs.Header.BuildMenu();
+
+                    let jVarLocalKCont1 = document.getElementById("KCont1");
+                    jVarLocalKCont1.innerHTML = "";
+                });
+
             }
         }
     };
@@ -117,4 +122,5 @@ class KSGlobalScanClass {
         }
     }
 };
+
 export { KSGlobalScanClass };

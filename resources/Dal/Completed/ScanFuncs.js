@@ -1,33 +1,24 @@
 class DalScanClass {
-    static Scan = async ({ inObjectToInsert = {} }) => {
+    static InsertFunc = async ({ inQrCode = 0 }) => {
         let LocalReturnObject = { KTF: false, KResult: "" };
 
         try {
+            let LocalJsonFileName = "Completed.json";
 
-            let LocalJsonFileName = "Bookings.json";
+            let LocalData = await Neutralino.filesystem.readFile(`./KData/JSON/2017/${LocalJsonFileName}`);
+            let LocalDataAsJson = JSON.parse(LocalData);
 
-            let ModalData = await Neutralino.filesystem.readFile(`./KData/JSON/TemplateData/${LocalJsonFileName}`);
-            let ModalDataAsJson = JSON.parse(ModalData);
-
-            let LocalCustomersData = await Neutralino.filesystem.readFile(`./KData/JSON/2017/${LocalJsonFileName}`);
-            let LocalCustomersDataAsJson = JSON.parse(LocalCustomersData);
-            let LocalKeys = Object.keys(LocalCustomersDataAsJson);
-            let max = 1;
-
-            if (LocalKeys.length > 0) {
-                let LocalKeysAsNumbers = this.CommonFuns.toNumbers(LocalKeys);
-
-                max = Math.max(...LocalKeysAsNumbers) + 1;
+            if (inQrCode in LocalDataAsJson) {
             };
 
-            let LocalNewData = _.pick(inObjectToInsert, Object.keys(ModalDataAsJson));
-            LocalNewData.DateTime = this.CommonFuns.LocalGetDate();
-            LocalCustomersDataAsJson[max] = LocalNewData;
+            LocalDataAsJson[inQrCode] = {
+                DateTime: this.CommonFuns.LocalGetDate()
+            };
 
-            let LocalFromWriteFile = await Neutralino.filesystem.writeFile(`./KData/JSON/2017/${LocalJsonFileName}`, JSON.stringify(LocalCustomersDataAsJson));
+            let LocalFromWriteFile = await Neutralino.filesystem.writeFile(`./KData/JSON/2017/${LocalJsonFileName}`, JSON.stringify(LocalDataAsJson));
 
             if (LocalFromWriteFile.success) {
-                LocalReturnObject.KResult = `${max} saved successfully...`;
+                LocalReturnObject.KResult = `${inQrCode} saved successfully...`;
                 LocalReturnObject.KTF = true;
             };
 
@@ -37,10 +28,6 @@ class DalScanClass {
 
         return await LocalReturnObject;
     };
-    
-    
-    
-    
 
     static CommonFuns = {
         LocalGetDate: () => {

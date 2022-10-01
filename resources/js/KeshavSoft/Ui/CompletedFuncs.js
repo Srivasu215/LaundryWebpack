@@ -1,5 +1,6 @@
 import { KSGlobalMenuClass } from "./MenuFuncs";
 import { DalCompletedClass } from "../../../Dal/Completed/JsonFuncs";
+import { KSGlobalScanClass } from "./ScanFuncs";
 
 class KSGlobalWashingCompletedClass {
     static JSFuncs = {
@@ -147,7 +148,7 @@ class KSGlobalWashingCompletedClass {
             CommonFuncs: {
                 AddListeners: () => {
                     let jVarLocalHomeId = document.getElementById("HomeId");
-                    
+
                     jVarLocalHomeId.addEventListener("click", async () => {
                         await KSGlobalMenuClass.ApiFuncs.Header.BuildMenu();
 
@@ -155,6 +156,19 @@ class KSGlobalWashingCompletedClass {
                         jVarLocalKCont1.innerHTML = "";
                     });
 
+                    let jVarLocalScanHeaderId = document.getElementById("ScanHeaderId");
+
+                    jVarLocalScanHeaderId.addEventListener("click", this.ApiFuncs.Header.CommonFuncs.ClickFuncs.ScanHeaderId);
+                },
+                ClickFuncs: {
+                    ScanHeaderId: async () => {
+                        let jVarInsideTemplate = await this.HtmlFuns.Templates.Scan();
+                        console.log("jVarInsideTemplate : ", jVarInsideTemplate);
+                        let jVarLocalKCont1 = document.getElementById("KCont1");
+                        jVarLocalKCont1.innerHTML = jVarInsideTemplate;
+
+                        KSGlobalScanClass.ApiFuncs.AddListeners();
+                    }
                 }
             }
         }
@@ -179,6 +193,12 @@ class KSGlobalWashingCompletedClass {
             },
             Insert: async () => {
                 let jVarLocalFetchUrl = "Templates/Booking/Insert.html";
+                let response = await fetch(jVarLocalFetchUrl);
+                let data = await response.text();
+                return await data;
+            },
+            Scan: async () => {
+                let jVarLocalFetchUrl = "Templates/Completed/Scan.html";
                 let response = await fetch(jVarLocalFetchUrl);
                 let data = await response.text();
                 return await data;
