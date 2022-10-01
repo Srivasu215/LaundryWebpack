@@ -1,129 +1,54 @@
+import { DalBookingFuncsClass } from "../Bookings/JsonFuncs";
+import _ from "../../js/lodash";
+
 class DalCompletedClass {
-    static InsertFunc = async ({ inObjectToInsert = {} }) => {
-        let LocalReturnObject = { KTF: false, KResult: "" };
 
-        try {
+    static ShowAllFunc = async () => {
+        let LocalJsonFileName = "Completed.json";
 
-            let LocalJsonFileName = "Bookings.json";
-
-            let ModalData = await Neutralino.filesystem.readFile(`./KData/JSON/TemplateData/${LocalJsonFileName}`);
-            let ModalDataAsJson = JSON.parse(ModalData);
-
-            let LocalCustomersData = await Neutralino.filesystem.readFile(`./KData/JSON/2017/${LocalJsonFileName}`);
-            let LocalCustomersDataAsJson = JSON.parse(LocalCustomersData);
-            let LocalKeys = Object.keys(LocalCustomersDataAsJson);
-            let max = 1;
-
-            if (LocalKeys.length > 0) {
-                let LocalKeysAsNumbers = this.CommonFuns.toNumbers(LocalKeys);
-
-                max = Math.max(...LocalKeysAsNumbers) + 1;
-            };
-
-            let LocalNewData = _.pick(inObjectToInsert, Object.keys(ModalDataAsJson));
-            LocalNewData.DateTime = this.CommonFuns.LocalGetDate();
-            LocalCustomersDataAsJson[max] = LocalNewData;
-
-            let LocalFromWriteFile = await Neutralino.filesystem.writeFile(`./KData/JSON/2017/${LocalJsonFileName}`, JSON.stringify(LocalCustomersDataAsJson));
-
-            if (LocalFromWriteFile.success) {
-                LocalReturnObject.KResult = `${max} saved successfully...`;
-                LocalReturnObject.KTF = true;
-            };
-
-        } catch (error) {
-            console.log("error InsertFunc : ", error);
-        };
-
-        return await LocalReturnObject;
-    };
-    static UpdateFunc = async ({ inRowPK }) => {
-        let LocalJsonFileName = "Bookings.json";
-    
-        let LocalReturnObject = { KTF: false, KResult: "" };
-    
-        let LocalCustomersData = await Neutralino.filesystem.readFile(`./KData/JSON/2017/${LocalJsonFileName}`);
-        let LocalCustomersDataAsJson = JSON.parse(LocalCustomersData);
-    
-        if (inRowPK in LocalCustomersDataAsJson) {
-            LocalCustomersDataAsJson[inRowPK].WashingDone = {
-                KTF: true,
-                DateTime: this.CommonFuns.LocalGetDate()
-            };
-    
-            let LocalFromWriteFile = await Neutralino.filesystem.writeFile(`./KData/JSON/2017/${LocalJsonFileName}`, JSON.stringify(LocalCustomersDataAsJson));
-    
-            if (LocalFromWriteFile.success) {
-                LocalReturnObject.KTF = true;
-                LocalReturnObject.KResult = `${inRowPK} deleted successfully...`
-            };
-        };
-    
-        return await LocalReturnObject;
-    };
-    static ShowTodayFunc = async () => {
-        let LocalJsonFileName = "Bookings.json";
-    
         let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
-    
-        let LocalCustomersData = await Neutralino.filesystem.readFile(`./KData/JSON/2017/${LocalJsonFileName}`);
-        let LocalCustomersDataAsJson = JSON.parse(LocalCustomersData);
-        let LocalCollectionData = Object.keys(LocalCustomersDataAsJson).map(key => ({ key, value: LocalCustomersDataAsJson[key] }));
-        
-        let LocalFilteredData = _.filter(LocalCollectionData, (LoopItem) => {
-            if ("WashingDone" in LoopItem.value) {
-                return (LoopItem.value.WashingDone.KTF === true) === false;
-            }else{
-                return true;
-            }
-        });
-    
-        LocalReturnObject.JsonData = LocalFilteredData;
-        console.log("LocalReturnObject : ", LocalReturnObject);
+
+        let LocalData = await Neutralino.filesystem.readFile(`./KData/JSON/2017/${LocalJsonFileName}`);
+        let LocalDataAsJson = JSON.parse(LocalData);
+        let LocalCollectionData = Object.keys(LocalDataAsJson).map(key => ({ key, value: LocalDataAsJson[key] }));
+
+        LocalReturnObject.JsonData = LocalCollectionData;
+        LocalReturnObject.KTF = true;
+
         return await LocalReturnObject;
     };
-    static Scan = async ({ inObjectToInsert = {} }) => {
-        let LocalReturnObject = { KTF: false, KResult: "" };
 
-        try {
+    static ShowWithBookingDataFunc = async () => {
+        let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
+        let LocalArray = [];
 
-            let LocalJsonFileName = "Bookings.json";
+        let LocalBookingData = await DalBookingFuncsClass.ShowAllFunc();
+        let LocalCompletedData = await this.ShowAllFunc();
 
-            let ModalData = await Neutralino.filesystem.readFile(`./KData/JSON/TemplateData/${LocalJsonFileName}`);
-            let ModalDataAsJson = JSON.parse(ModalData);
-
-            let LocalCustomersData = await Neutralino.filesystem.readFile(`./KData/JSON/2017/${LocalJsonFileName}`);
-            let LocalCustomersDataAsJson = JSON.parse(LocalCustomersData);
-            let LocalKeys = Object.keys(LocalCustomersDataAsJson);
-            let max = 1;
-
-            if (LocalKeys.length > 0) {
-                let LocalKeysAsNumbers = this.CommonFuns.toNumbers(LocalKeys);
-
-                max = Math.max(...LocalKeysAsNumbers) + 1;
-            };
-
-            let LocalNewData = _.pick(inObjectToInsert, Object.keys(ModalDataAsJson));
-            LocalNewData.DateTime = this.CommonFuns.LocalGetDate();
-            LocalCustomersDataAsJson[max] = LocalNewData;
-
-            let LocalFromWriteFile = await Neutralino.filesystem.writeFile(`./KData/JSON/2017/${LocalJsonFileName}`, JSON.stringify(LocalCustomersDataAsJson));
-
-            if (LocalFromWriteFile.success) {
-                LocalReturnObject.KResult = `${max} saved successfully...`;
-                LocalReturnObject.KTF = true;
-            };
-
-        } catch (error) {
-            console.log("error InsertFunc : ", error);
+        if (LocalCompletedData.KTF === false) {
+            LocalReturnObject.KReason = LocalCompletedData.KReason;
+            return await LocalReturnObject;
         };
 
+        if (LocalBookingData.KTF === false) {
+            LocalReturnObject.KReason = LocalBookingData.KReason;
+            return await LocalReturnObject;
+        };
+
+        LocalReturnObject.JsonData = _.map(LocalCompletedData.JsonData, (LoopItem) => {
+            let LoopInside = _.find(LocalBookingData.JsonData, LoopBooking => {
+                return LoopItem.key in LoopBooking.value.QrCodes;
+            });
+
+            LoopItem.value.CustomerName = LoopInside.value.CustomerName;
+            return LoopItem;
+        });
+
+        LocalReturnObject.KTF = true;
+
         return await LocalReturnObject;
     };
-    
-    
-    
-    
+
 
     static CommonFuns = {
         toNumbers: arr => arr.map(Number),
@@ -141,11 +66,11 @@ class DalCompletedClass {
         },
         LocalGetDateOnly: () => {
             let date = new Date();
-        
+
             let dd = (date.getDate() < 10 ? '0' : '') + date.getDate();
             let MM = ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1);
             let yyyy = date.getFullYear();
-        
+
             return `${dd}-${MM}-${yyyy}`;
         }
     }

@@ -41,7 +41,7 @@ class KSGlobalWashingCompletedClass {
         Show: async () => {
             let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
 
-            let LocalDataFromJson = await DalCompletedClass.ShowTodayFunc();
+            let LocalDataFromJson = await DalCompletedClass.ShowWithBookingDataFunc();
             let LocalSNo = 1;
 
             Object.entries(LocalDataFromJson.JsonData).forEach(
@@ -110,7 +110,7 @@ class KSGlobalWashingCompletedClass {
             var template = Handlebars.compile(jVarLocalFromTemplate);
 
             let jVarLocalDataNeeded = await this.JSFuncs.Show();
-            console.log("jVarLocalDataNeeded : ", jVarLocalDataNeeded);
+            
             if (jVarLocalDataNeeded.KTF === false) {
 
             };

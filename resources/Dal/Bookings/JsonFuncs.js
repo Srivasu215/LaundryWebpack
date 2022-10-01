@@ -64,6 +64,27 @@ class DalBookingFuncsClass {
         };
         return await LocalReturnObject;
     };
+    
+    static ShowAllFunc = async () => {
+        let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
+
+        try {
+            let LocalJsonFileName = "Bookings.json";
+            let LocalFileName = `./KData/JSON/2017/${LocalJsonFileName}`;
+
+            let LocalCustomersData = await Neutralino.filesystem.readFile(LocalFileName);
+            let LocalCustomersDataAsJson = JSON.parse(LocalCustomersData);
+
+            let LocalCollectionData = Object.keys(LocalCustomersDataAsJson).map(key => ({ key, value: LocalCustomersDataAsJson[key] }));
+
+            LocalReturnObject.JsonData = LocalCollectionData;
+            LocalReturnObject.KTF = true;
+        } catch (error) {
+            //LocalReturnObject.KError =`${LocalFileName} `;
+            LocalReturnObject.KError = error;
+        };
+        return await LocalReturnObject;
+    };
 
     static ShowDataForDelete = async () => {
         let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
