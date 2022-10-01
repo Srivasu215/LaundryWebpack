@@ -149,138 +149,200 @@
 			return jVarLocalReturnObject;
 		};
 
-
 		let jFGarmentsSecondRow = () => {
+			let jVarLocalReturnObject = { KTF: false, KResult: {} };
+
 			let jVarLocalGarments2 = document.getElementById("Garments2");
 			let jVarLocalPcs2 = document.getElementById("Pcs2");
 
-			let jVarDataObject = {};
-			jVarDataObject.Garments = {};
-			jVarDataObject.Garments.SecondRow = {
+			if ((jVarLocalPcs2.value > 0) === false) {
+				jVarLocalReturnObject.KReason = "Pcs is not positive";
+				return jVarLocalReturnObject;
+			};
+
+			jVarLocalReturnObject.KTF = true;
+			
+			jVarLocalReturnObject.KResult = {
 				Name: jVarLocalGarments2.value,
 				Pcs: jVarLocalPcs2.value
 			};
 
-			console.log("jVarDataObject : ", jVarDataObject);
+			return jVarLocalReturnObject;
 		};
 
+		
 		let jFGarmentsThirdRow = () => {
+			let jVarLocalReturnObject = { KTF: false, KResult: {} };
+
 			let jVarLocalGarments3 = document.getElementById("Garments3");
 			let jVarLocalPcs3 = document.getElementById("Pcs3");
 
-			let jVarDataObject = {};
-			jVarDataObject.Garments = {};
-			jVarDataObject.Garments.ThirdRow = {
+			if ((jVarLocalPcs3.value > 0) === false) {
+				jVarLocalReturnObject.KReason = "Pcs is not positive";
+				return jVarLocalReturnObject;
+			};
+
+			jVarLocalReturnObject.KTF = true;
+			
+			jVarLocalReturnObject.KResult = {
 				Name: jVarLocalGarments3.value,
 				Pcs: jVarLocalPcs3.value
 			};
 
-			console.log("jVarDataObject : ", jVarDataObject);
+			return jVarLocalReturnObject;
 		};
 
 		let jFGarmentsFourthRow = () => {
+			let jVarLocalReturnObject = { KTF: false, KResult: {} };
+
 			let jVarLocalGarments4 = document.getElementById("Garments4");
 			let jVarLocalPcs4 = document.getElementById("Pcs4");
 
-			let jVarDataObject = {};
-			jVarDataObject.Garments = {};
-			jVarDataObject.Garments.FourthRow = {
+			if ((jVarLocalPcs4.value > 0) === false) {
+				jVarLocalReturnObject.KReason = "Pcs is not positive";
+				return jVarLocalReturnObject;
+			};
+
+			jVarLocalReturnObject.KTF = true;
+			
+			jVarLocalReturnObject.KResult = {
 				Name: jVarLocalGarments4.value,
 				Pcs: jVarLocalPcs4.value
 			};
 
-			console.log("jVarDataObject : ", jVarDataObject);
+			return jVarLocalReturnObject;
 		};
 
 
 		let jFGarmentsFifthRow = () => {
+			let jVarLocalReturnObject = { KTF: false, KResult: {} };
+
 			let jVarLocalGarments5 = document.getElementById("Garments5");
 			let jVarLocalPcs5 = document.getElementById("Pcs5");
 
-			let jVarDataObject = {};
-			jVarDataObject.Garments = {};
-			jVarDataObject.Garments.FifthRow = {
+			if ((jVarLocalPcs5.value > 0) === false) {
+				jVarLocalReturnObject.KReason = "Pcs is not positive";
+				return jVarLocalReturnObject;
+			};
+
+			jVarLocalReturnObject.KTF = true;
+			
+			jVarLocalReturnObject.KResult = {
 				Name: jVarLocalGarments5.value,
 				Pcs: jVarLocalPcs5.value
 			};
 
-			console.log("jVarDataObject : ", jVarDataObject);
+			return jVarLocalReturnObject;
 		};
 
-
+		
 		let jFGarmentsSixthRow = () => {
+			let jVarLocalReturnObject = { KTF: false, KResult: {} };
+
 			let jVarLocalGarments6 = document.getElementById("Garments6");
 			let jVarLocalPcs6 = document.getElementById("Pcs6");
 
-			let jVarDataObject = {};
-			jVarDataObject.Garments = {};
-			jVarDataObject.Garments.SixthRow = {
+			if ((jVarLocalPcs6.value > 0) === false) {
+				jVarLocalReturnObject.KReason = "Pcs is not positive";
+				return jVarLocalReturnObject;
+			};
+
+			jVarLocalReturnObject.KTF = true;
+			
+			jVarLocalReturnObject.KResult = {
 				Name: jVarLocalGarments6.value,
 				Pcs: jVarLocalPcs6.value
 			};
 
-			console.log("jVarDataObject : ", jVarDataObject);
+			return jVarLocalReturnObject;
 		};
 
-
 		let jFGarmentsSeventhRow = () => {
+			let jVarLocalReturnObject = { KTF: false, KResult: {} };
+
 			let jVarLocalGarments7 = document.getElementById("Garments7");
 			let jVarLocalPcs7 = document.getElementById("Pcs7");
 
-			let jVarDataObject = {};
-			jVarDataObject.Garments = {};
-			jVarDataObject.Garments.SeventhRow = {
+			if ((jVarLocalPcs7.value > 0) === false) {
+				jVarLocalReturnObject.KReason = "Pcs is not positive";
+				return jVarLocalReturnObject;
+			};
+
+			jVarLocalReturnObject.KTF = true;
+			
+			jVarLocalReturnObject.KResult = {
 				Name: jVarLocalGarments7.value,
 				Pcs: jVarLocalPcs7.value
 			};
 
-			console.log("jVarDataObject : ", jVarDataObject);
+			return jVarLocalReturnObject;
 		};
 
 
 		let jFGarmentsEightRow = () => {
+			let jVarLocalReturnObject = { KTF: false, KResult: {} };
+
 			let jVarLocalGarments8 = document.getElementById("Garments8");
 			let jVarLocalPcs8 = document.getElementById("Pcs8");
 
-			let jVarDataObject = {};
-			jVarDataObject.Garments = {};
-			jVarDataObject.Garments.EightRow = {
+			if ((jVarLocalPcs8.value > 0) === false) {
+				jVarLocalReturnObject.KReason = "Pcs is not positive";
+				return jVarLocalReturnObject;
+			};
+
+			jVarLocalReturnObject.KTF = true;
+			
+			jVarLocalReturnObject.KResult = {
 				Name: jVarLocalGarments8.value,
 				Pcs: jVarLocalPcs8.value
 			};
 
-			console.log("jVarDataObject : ", jVarDataObject);
+			return jVarLocalReturnObject;
 		};
 
-
+		
 
 		let jFGarmentsNinethRow = () => {
+			let jVarLocalReturnObject = { KTF: false, KResult: {} };
+
 			let jVarLocalGarments9 = document.getElementById("Garments9");
 			let jVarLocalPcs9 = document.getElementById("Pcs9");
 
-			let jVarDataObject = {};
-			jVarDataObject.Garments = {};
-			jVarDataObject.Garments.NinethRow = {
+			if ((jVarLocalPcs9.value > 0) === false) {
+				jVarLocalReturnObject.KReason = "Pcs is not positive";
+				return jVarLocalReturnObject;
+			};
+
+			jVarLocalReturnObject.KTF = true;
+			
+			jVarLocalReturnObject.KResult = {
 				Name: jVarLocalGarments9.value,
 				Pcs: jVarLocalPcs9.value
 			};
 
-			console.log("jVarDataObject : ", jVarDataObject);
+			return jVarLocalReturnObject;
 		};
 
 
 		let jFGarmentsTenthRow = () => {
+			let jVarLocalReturnObject = { KTF: false, KResult: {} };
+
 			let jVarLocalGarments10 = document.getElementById("Garments10");
 			let jVarLocalPcs10 = document.getElementById("Pcs10");
 
-			let jVarDataObject = {};
-			jVarDataObject.Garments = {};
-			jVarDataObject.Garments.TenthRow = {
+			if ((jVarLocalPcs10.value > 0) === false) {
+				jVarLocalReturnObject.KReason = "Pcs is not positive";
+				return jVarLocalReturnObject;
+			};
+
+			jVarLocalReturnObject.KTF = true;
+			
+			jVarLocalReturnObject.KResult = {
 				Name: jVarLocalGarments10.value,
 				Pcs: jVarLocalPcs10.value
 			};
 
-			console.log("jVarDataObject : ", jVarDataObject);
+			return jVarLocalReturnObject;
 		};
 	</script>
 </body>
