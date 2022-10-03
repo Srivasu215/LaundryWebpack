@@ -67,12 +67,48 @@ class KSGlobalBookingClass {
                 ListenerFuncs: {
                     SaveFunc: async () => {
                         let jVarLocalObject = {};
-                        jVarLocalObject.Garments={};
+                        jVarLocalObject.Garments = {};
 
                         let LocalGarmentsFirstRow = jFGarmentsFirstRow();
                         if (LocalGarmentsFirstRow.KTF) {
-                            jVarLocalObject.Garments[1]=LocalGarmentsFirstRow.KResult
-                        }
+                            jVarLocalObject.Garments[1] = LocalGarmentsFirstRow.KResult
+                        };
+                        let LocalGarmentsSecondRow = jFGarmentsSecondRow();
+                        if (LocalGarmentsSecondRow.KTF) {
+                            jVarLocalObject.Garments[2] = LocalGarmentsSecondRow.KResult
+                        };
+                        let LocalGarmentsThirdRow = jFGarmentsThirdRow();
+                        if (LocalGarmentsThirdRow.KTF) {
+                            jVarLocalObject.Garments[3] = LocalGarmentsThirdRow.KResult
+                        };
+                        let LocalGarmentsFourthRow = jFGarmentsFourthRow();
+                        if (LocalGarmentsFourthRow.KTF) {
+                            jVarLocalObject.Garments[4] = LocalGarmentsFourthRow.KResult
+                        };
+                        let LocalGarmentsFifthRow = jFGarmentsFifthRow();
+                        if (LocalGarmentsFifthRow.KTF) {
+                            jVarLocalObject.Garments[5] = LocalGarmentsFifthRow.KResult
+                        };
+                        let LocalGarmentsSixthRow = jFGarmentsSixthRow();
+                        if (LocalGarmentsSixthRow.KTF) {
+                            jVarLocalObject.Garments[6] = LocalGarmentsSixthRow.KResult
+                        };
+                        let LocalGarmentsSeventhRow = jFGarmentsSeventhRow();
+                        if (LocalGarmentsSeventhRow.KTF) {
+                            jVarLocalObject.Garments[7] = LocalGarmentsSeventhRow.KResult
+                        };
+                        let LocalGarmentsEightRow = jFGarmentsEightRow();
+                        if (LocalGarmentsEightRow.KTF) {
+                            jVarLocalObject.Garments[8] = LocalGarmentsEightRow.KResult
+                        };
+                        let LocalGarmentsNinethRow = jFGarmentsNinethRow();
+                        if (LocalGarmentsNinethRow.KTF) {
+                            jVarLocalObject.Garments[9] = LocalGarmentsNinethRow.KResult
+                        };
+                        let LocalGarmentsTenthRow = jFGarmentsTenthRow();
+                        if (LocalGarmentsTenthRow.KTF) {
+                            jVarLocalObject.Garments[10] = LocalGarmentsTenthRow.KResult
+                        };
 
 
                         console.log("jVarLocalObject", jVarLocalObject);
