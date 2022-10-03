@@ -52,6 +52,7 @@ class DalBookingFuncsClass {
 
             let LocalFilteredData = _.filter(LocalCollectionData, (LoopItem) => {
                 if ("DateTime" in LoopItem.value) {
+                    console.log("ssssssssss : ", LoopItem.value.DateTime);
                     return LoopItem.value.DateTime.substring(0, 10) === this.CommonFuns.GetDateOnly();
                 };
             });
@@ -64,7 +65,7 @@ class DalBookingFuncsClass {
         };
         return await LocalReturnObject;
     };
-    
+
     static ShowAllFunc = async () => {
         let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
 

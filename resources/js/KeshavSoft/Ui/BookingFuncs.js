@@ -66,7 +66,7 @@ class KSGlobalBookingClass {
                 },
                 ListenerFuncs: {
                     SaveFunc: async () => {
-                        console.log("this is save func for booking");
+                        console.log("this is save func for bookings");
                     },
                     SaveFunc_oldgood: async () => {
                         let jVarLocalFormVertical = document.getElementById("FormVertical");
@@ -117,7 +117,7 @@ class KSGlobalBookingClass {
                 var template = Handlebars.compile(jVarLocalFromTemplate);
 
                 let jVarLocalDataNeeded = await this.JSFuncs.Show();
-
+                console.log("jVarLocalDataNeeded : ", jVarLocalDataNeeded);
                 if (jVarLocalDataNeeded.KTF === false) {
 
                 };
