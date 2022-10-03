@@ -66,6 +66,7 @@ class KSGlobalBookingClass {
                 },
                 ListenerFuncs: {
                     SaveFunc: async () => {
+
                         
                         let LocalGarmentsFirstRow = jFGarmentsFirstRow({KResult})
 
