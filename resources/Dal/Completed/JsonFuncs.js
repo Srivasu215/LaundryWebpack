@@ -20,7 +20,6 @@ class DalCompletedClass {
 
     static ShowWithBookingDataFunc = async () => {
         let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
-        let LocalArray = [];
 
         let LocalBookingData = await DalBookingFuncsClass.ShowAllFunc();
         let LocalCompletedData = await this.ShowAllFunc();
@@ -39,8 +38,13 @@ class DalCompletedClass {
             let LoopInside = _.find(LocalBookingData.JsonData, LoopBooking => {
                 return LoopItem.key in LoopBooking.value.QrCodes;
             });
+            console.log("LoopInside", LoopInside);
+            if ((LoopInside === undefined) === false) {
+                LoopItem.value.CustomerName = LoopInside.value.CustomerName;
+            } else {
+                LocalReturnObject.KReason = `${LoopItem.key} : Qrcode not found in Bookings.json`;
+            };
 
-            LoopItem.value.CustomerName = LoopInside.value.CustomerName;
             return LoopItem;
         });
 

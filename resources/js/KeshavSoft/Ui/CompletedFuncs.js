@@ -44,6 +44,8 @@ class KSGlobalWashingCompletedClass {
             let LocalDataFromJson = await DalCompletedClass.ShowWithBookingDataFunc();
             let LocalSNo = 1;
 
+            LocalReturnObject.KReason = LocalDataFromJson.KReason;
+
             Object.entries(LocalDataFromJson.JsonData).forEach(
                 ([key, value]) => {
                     LocalReturnObject.JsonData[key] = value;
@@ -55,7 +57,6 @@ class KSGlobalWashingCompletedClass {
             LocalReturnObject.KTF = true;
 
             return await LocalReturnObject;
-
         },
         Update: async () => {
             let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
@@ -110,9 +111,13 @@ class KSGlobalWashingCompletedClass {
             var template = Handlebars.compile(jVarLocalFromTemplate);
 
             let jVarLocalDataNeeded = await this.JSFuncs.Show();
-            
-            if (jVarLocalDataNeeded.KTF === false) {
 
+            if (jVarLocalDataNeeded.KTF === false) {
+            
+            };
+
+            if ("KReason" in jVarLocalDataNeeded) {
+                console.log("KError : ", jVarLocalDataNeeded.KReason);
             };
 
             let jVarLocalHtml = template(jVarLocalDataNeeded.JsonData);
@@ -142,7 +147,7 @@ class KSGlobalWashingCompletedClass {
                     jVarLocalScanHeaderId.addEventListener("click", this.ApiFuncs.Header.CommonFuncs.ClickFuncs.ScanHeaderId);
 
 
-                    let jVarLocalCompletedHeaderId= document.getElementById("CompletedHeaderId");
+                    let jVarLocalCompletedHeaderId = document.getElementById("CompletedHeaderId");
 
                     //jVarLocalCompletedHeaderId.addEventListener("click", this.ApiFuncs.Header.CommonFuncs.ClickFuncs.CompletedHeaderId);
                     jVarLocalCompletedHeaderId.addEventListener("click", this.ApiFuncs.Show);

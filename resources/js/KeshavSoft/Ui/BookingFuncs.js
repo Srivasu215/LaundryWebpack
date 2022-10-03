@@ -44,55 +44,66 @@ class KSGlobalBookingClass {
     };
 
     static ApiFuncs = {
-        SaveFunc: async () => {
-            let jVarLocalFormVertical = document.getElementById("FormVertical");
-
-            jVarLocalFormVertical.classList.remove('was-validated');
-            jVarLocalFormVertical.classList.add('novalidate');
-
-            if (jVarLocalFormVertical.checkValidity()) {
-                let PromiseDataFromSave = await DalBookingFuncsClass.InsertFunc({ inObjectToInsert: this.CommonFuncs.serializeObject(jVarLocalFormVertical) });
-
-                if (PromiseDataFromSave.KTF) {
-                    let jVarLocalAlertSuccessId = document.getElementById("AlertSuccessId");
-                    let jVarLocalAlertSuccessMessageId = document.getElementById("AlertSuccessMessageId");
-                    jVarLocalAlertSuccessId.style.display = "";
-                    jVarLocalAlertSuccessMessageId.innerHTML = `<strong>Hurray!</strong> ${PromiseDataFromSave.KResult}`
-
-                    setTimeout(function () {
-                        jVarLocalAlertSuccessId.style.display = "none"
-
-                    }, 7000);
-                } else {
-                    let jVarLocalAlertDangerId = document.getElementById("AlertWarningId");
-                    let jVarLocalAlertDangerMessageId = document.getElementById("AlertWarningMessageId");
-                    jVarLocalAlertDangerId.style.display = "";
-                    jVarLocalAlertDangerMessageId.innerHTML = `<strong>Sorry!</strong> ${PromiseDataFromSave.KReason}`
-
-                    setTimeout(function () {
-                        jVarLocalAlertDangerId.style.display = "none"
-
-                    }, 7000);
+        ShowinDOM: {
+            Insert: async (inEvent) => {
+                if ((inEvent === undefined) === false) {
+                    let jVarLocalCurrentTarget = inEvent.currentTarget;
+                    this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
                 };
-            } else {
-                document.forms[1].classList.add('was-validated');
-            };
-        },
-        Insert: async (inEvent) => {
-            if ((inEvent === undefined) === false) {
-                let jVarLocalCurrentTarget = inEvent.currentTarget;
-                this.CommonFuncs.Ui.Html.DOM.Header.ChangeClass({ inHtmlControl: jVarLocalCurrentTarget });
-            };
 
-            let jVarLocalFromHbs = await this.HtmlFuns.Templates.Insert();
+                let jVarLocalFromHbs = await this.HtmlFuns.Templates.Insert();
 
-            let jVarLocalKCont1 = document.getElementById("KCont1");
-            jVarLocalKCont1.innerHTML = jVarLocalFromHbs;
+                let jVarLocalKCont1 = document.getElementById("KCont1");
+                jVarLocalKCont1.innerHTML = jVarLocalFromHbs;
 
-            let jVarLocalBookingSaveButtonId = document.getElementById("BookingSaveButtonId");
-            jVarLocalBookingSaveButtonId.addEventListener("click", async () => {
-                await this.ApiFuncs.SaveFunc();
-            });
+                await this.ApiFuncs.ShowinDOM.CommonFuncs.AddListeners();
+            },
+            CommonFuncs: {
+                AddListeners: () => {
+                    let jVarLocalBookingSaveButtonId = document.getElementById("BookingSaveButtonId");
+
+                    jVarLocalBookingSaveButtonId.addEventListener("click", this.ApiFuncs.ShowinDOM.CommonFuncs.ListenerFuncs.SaveFunc);
+                },
+                ListenerFuncs: {
+                    SaveFunc: async () => {
+                        console.log("this is save func for booking");
+                    },
+                    SaveFunc_oldgood: async () => {
+                        let jVarLocalFormVertical = document.getElementById("FormVertical");
+
+                        jVarLocalFormVertical.classList.remove('was-validated');
+                        jVarLocalFormVertical.classList.add('novalidate');
+
+                        if (jVarLocalFormVertical.checkValidity()) {
+                            let PromiseDataFromSave = await DalBookingFuncsClass.InsertFunc({ inObjectToInsert: this.CommonFuncs.serializeObject(jVarLocalFormVertical) });
+
+                            if (PromiseDataFromSave.KTF) {
+                                let jVarLocalAlertSuccessId = document.getElementById("AlertSuccessId");
+                                let jVarLocalAlertSuccessMessageId = document.getElementById("AlertSuccessMessageId");
+                                jVarLocalAlertSuccessId.style.display = "";
+                                jVarLocalAlertSuccessMessageId.innerHTML = `<strong>Hurray!</strong> ${PromiseDataFromSave.KResult}`
+
+                                setTimeout(function () {
+                                    jVarLocalAlertSuccessId.style.display = "none"
+
+                                }, 7000);
+                            } else {
+                                let jVarLocalAlertDangerId = document.getElementById("AlertWarningId");
+                                let jVarLocalAlertDangerMessageId = document.getElementById("AlertWarningMessageId");
+                                jVarLocalAlertDangerId.style.display = "";
+                                jVarLocalAlertDangerMessageId.innerHTML = `<strong>Sorry!</strong> ${PromiseDataFromSave.KReason}`
+
+                                setTimeout(function () {
+                                    jVarLocalAlertDangerId.style.display = "none"
+
+                                }, 7000);
+                            };
+                        } else {
+                            document.forms[1].classList.add('was-validated');
+                        };
+                    }
+                }
+            }
         },
         QrCode: {
             ShowAll: async (inEvent) => {
@@ -275,9 +286,7 @@ class KSGlobalBookingClass {
                     await this.ApiFuncs.ShowAll();
                 });
 
-                jVarLocalBookingHeaderInsertId.addEventListener("click", async () => {
-                    await this.ApiFuncs.Insert();
-                });
+                jVarLocalBookingHeaderInsertId.addEventListener("click", this.ApiFuncs.ShowinDOM.Insert());
 
                 jVarLocalBookingHeaderQrCodeId.addEventListener("click", async () => {
                     await this.ApiFuncs.QrCode.ShowAll();
