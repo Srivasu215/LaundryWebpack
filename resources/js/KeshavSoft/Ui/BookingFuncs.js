@@ -66,11 +66,16 @@ class KSGlobalBookingClass {
                 },
                 ListenerFuncs: {
                     SaveFunc: async () => {
+                        let jVarLocalObject = {};
+                        jVarLocalObject.Garments={};
 
-                        
-                        let LocalGarmentsFirstRow = jFGarmentsFirstRow({KResult})
+                        let LocalGarmentsFirstRow = jFGarmentsFirstRow();
+                        if (LocalGarmentsFirstRow.KTF) {
+                            jVarLocalObject.Garments[1]=LocalGarmentsFirstRow.KResult
+                        }
 
-                        console.log("LocalGarmentsFirstRow",LocalGarmentsFirstRow);
+
+                        console.log("jVarLocalObject", jVarLocalObject);
                         console.log("this is save func for bookings----");
                     },
                     SaveFunc_oldgood: async () => {
