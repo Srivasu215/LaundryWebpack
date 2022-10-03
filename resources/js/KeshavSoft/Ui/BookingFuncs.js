@@ -66,7 +66,11 @@ class KSGlobalBookingClass {
                 },
                 ListenerFuncs: {
                     SaveFunc: async () => {
-                        console.log("this is save func for bookings");
+                        
+                        let LocalGarmentsFirstRow = jFGarmentsFirstRow({KResult})
+
+                        console.log("LocalGarmentsFirstRow",LocalGarmentsFirstRow);
+                        console.log("this is save func for bookings----");
                     },
                     SaveFunc_oldgood: async () => {
                         let jVarLocalFormVertical = document.getElementById("FormVertical");
