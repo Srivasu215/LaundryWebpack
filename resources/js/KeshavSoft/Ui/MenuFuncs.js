@@ -100,5 +100,4 @@ class KSGlobalMenuClass {
     };
 };
 
-
 export { KSGlobalMenuClass }
