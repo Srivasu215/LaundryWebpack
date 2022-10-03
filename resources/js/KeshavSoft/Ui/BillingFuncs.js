@@ -145,20 +145,17 @@ class KSGlobalBillingClass {
 
                     let jVarLocalBillingHeaderId = document.getElementById("BillingHeaderId");
 
-                    jVarLocalBillingHeaderId.addEventListener("click", this.ApiFuncs.Header.CommonFuncs.ClickFuncs.BillingHeaderId);
+                    jVarLocalBillingHeaderId.addEventListener("click", this.ApiFuncs.Show);
 
                     
                     let jVarLocalBillingScanHeaderId = document.getElementById("BillingScanHeaderId");
 
                     jVarLocalBillingScanHeaderId.addEventListener("click", this.ApiFuncs.Header.CommonFuncs.ClickFuncs.BillingScanHeaderId);
-
-
-                    
                 },
                 ClickFuncs: {
                     BillingHeaderId: async () => {
                         let jVarInsideTemplate = await this.HtmlFuns.Templates.Show();
-                        console.log("jVarInsideTemplate : ", jVarInsideTemplate);
+                        console.log("jVarInsideTemplate------- : ", jVarInsideTemplate);
                         let jVarLocalKCont1 = document.getElementById("KCont1");
                         jVarLocalKCont1.innerHTML = jVarInsideTemplate;
 
@@ -265,6 +262,5 @@ class KSGlobalBillingClass {
         }
     }
 };
-
 
 export { KSGlobalBillingClass };

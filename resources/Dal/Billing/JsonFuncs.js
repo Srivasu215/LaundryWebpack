@@ -4,7 +4,7 @@ import _ from "../../js/lodash";
 class DalBillingClass {
 
     static ShowAllFunc = async () => {
-        let LocalJsonFileName = "Completed.json";
+        let LocalJsonFileName = "Billing.json";
 
         let LocalReturnObject = { KTF: false, KResult: "", JsonData: {} };
 
