@@ -131,20 +131,39 @@ class KSGlobalBookingClass {
                 let jVarLocalDataNeeded = await DalBookingFuncsClass.PickFunc({ inRowPK });
 
                 if (jVarLocalDataNeeded.KTF) {
-                    let jVarLocalModalCustomerName = document.getElementById("ModalCustomerName");
-                    let jVarLocalModalPK = document.getElementById("ModalPK");
-                    let jVarLocalModalGarments = document.getElementById("ModalGarments");
-                    let jVarLocalModalWeight = document.getElementById("ModalWeight");
-                    let jVarLocalModalMobile = document.getElementById("ModalMobile");
+                    let jVarLocalModalBody = document.getElementById("ModalBody");
 
-                    jVarLocalModalCustomerName.innerHTML = jVarLocalDataNeeded.KResult.CustomerName;
-                    jVarLocalModalPK.innerHTML = inRowPK;
-                    jVarLocalModalGarments.innerHTML = jVarLocalDataNeeded.KResult.Garments;
-                    jVarLocalModalWeight.innerHTML = `${jVarLocalDataNeeded.KResult.Weight} Kg.`;
-                    jVarLocalModalMobile.innerHTML = jVarLocalDataNeeded.KResult.Mobile;
+                    let jVarLocalFromTemplate = await this.HtmlFuns.Hbs.QrCodeModalPopUp();
+
+                    var template = Handlebars.compile(jVarLocalFromTemplate);
+                    jVarLocalDataNeeded.KResult.PK = inRowPK;
+                    jVarLocalModalBody.innerHTML = template(jVarLocalDataNeeded.KResult);
+
+                    // let jVarLocalModalCustomerName = document.getElementById("ModalCustomerName");
+                    // let jVarLocalModalPK = document.getElementById("ModalPK");
+                    // let jVarLocalModalGarments = document.getElementById("ModalGarments");
+                    // let jVarLocalModalWeight = document.getElementById("ModalWeight");
+                    // let jVarLocalModalMobile = document.getElementById("ModalMobile");
+
+                    // jVarLocalModalCustomerName.innerHTML = jVarLocalDataNeeded.KResult.CustomerName;
+                    // jVarLocalModalPK.innerHTML = inRowPK;
+                    // jVarLocalModalGarments.innerHTML = jVarLocalDataNeeded.KResult.Garments;
+                    // jVarLocalModalWeight.innerHTML = `${jVarLocalDataNeeded.KResult.Weight} Kg.`;
+                    // jVarLocalModalMobile.innerHTML = jVarLocalDataNeeded.KResult.Mobile;
 
                     let jVarLocalQrData = `${inRowPK}/${jVarLocalDataNeeded.KResult.CustomerName}/${jVarLocalDataNeeded.KResult.Mobile}/${jVarLocalDataNeeded.KResult.Garments}/${jVarLocalDataNeeded.KResult.Weight}`;
-                    this.CommonFuncs.QrCode.GenerateQrCodeOnCanvas({ inQrData: jVarLocalQrData });
+                    // this.CommonFuncs.QrCode.GenerateQrCodeOnCanvas({ inQrData: jVarLocalQrData });
+
+                    Object.entries(jVarLocalDataNeeded.KResult.QrCodes).forEach(
+                        ([key, value]) => {
+                            let jVarLocalHtmlQr = document.getElementById(`${inRowPK}-${key}`);
+                            let jVarLocalQrData = `${inRowPK}-${key}/${jVarLocalDataNeeded.KResult.CustomerName}/${jVarLocalDataNeeded.KResult.Mobile}/${jVarLocalDataNeeded.KResult.Garments}/${jVarLocalDataNeeded.KResult.Weight}`;
+                            this.CommonFuncs.QrCode.GenerateQrCodeOnModal({
+                                inQrData: jVarLocalQrData,
+                                inCanvasId: jVarLocalHtmlQr
+                            });
+                        }
+                    );
 
                     let jVarLocalId = "ModalForQrCode";
 
@@ -355,6 +374,12 @@ class KSGlobalBookingClass {
                 let data = await response.text();
                 return await data;
             },
+            QrCodeModalPopUp: async () => {
+                let jVarLocalFetchUrl = "Hbs/Booking/QrCodeModalPopUp.html";
+                let response = await fetch(jVarLocalFetchUrl);
+                let data = await response.text();
+                return await data;
+            },
             ShowAll: async () => {
                 let jVarLocalFetchUrl = "Hbs/Booking/ShowAll.html";
                 let response = await fetch(jVarLocalFetchUrl);
@@ -389,6 +414,38 @@ class KSGlobalBookingClass {
         QrCode: {
             GenerateQrCodeOnCanvas: ({ inQrData = "" }) => {
                 var canvas = document.getElementById('canvas');
+                canvas.height = 1;
+                canvas.width = 1;
+                canvas.style.visibility = 'hidden';
+
+                // Convert the options to an object.
+                let opts = {};
+
+                // Finish up the options
+                opts.text = inQrData;
+                opts.bcid = "qrcode";
+                opts.scaleX = 1;
+                opts.scaleY = 1;
+                opts.rotate = "N";
+
+                // Draw the bar code to the canvas
+                try {
+                    let ts0 = new Date;
+                    bwipjs.toCanvas(canvas, opts);
+                    show(ts0, new Date);
+                } catch (e) {
+                    console.log("error : ", e);
+                    // Watch for BWIPP generated raiseerror's.
+
+                    return;
+                }
+
+                function show(ts0, ts1) {
+                    canvas.style.visibility = 'visible';
+                }
+            },
+            GenerateQrCodeOnModal: ({ inQrData = "", inCanvasId }) => {
+                var canvas = inCanvasId;
                 canvas.height = 1;
                 canvas.width = 1;
                 canvas.style.visibility = 'hidden';
