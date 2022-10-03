@@ -45,5 +45,4 @@ class DalBillingScanClass {
     }
 };
 
-
 export { DalBillingScanClass }

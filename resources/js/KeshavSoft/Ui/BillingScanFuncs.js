@@ -123,5 +123,4 @@ class KSGlobalBillingScanClass {
     }
 };
 
-
 export { KSGlobalBillingScanClass };
