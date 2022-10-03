@@ -1,5 +1,6 @@
 import { KSGlobalBookingClass } from "./BookingFuncs";
 import { KSGlobalWashingCompletedClass } from "./CompletedFuncs";
+import { KSGlobalBillingClass } from "./BillingFuncs";
 
 class KSGlobalMenuClass {
     static ApiFuncs = {
@@ -17,10 +18,14 @@ class KSGlobalMenuClass {
                 AddListener: () => {
                     let jVarLocalBookingId = document.getElementById("BookingId");
                     let jVarLocalWashingCompletedId = document.getElementById("WashingCompletedId");
+                    let jVarLocalBillingId = document.getElementById("BillingId");
 
                     jVarLocalBookingId.addEventListener("click", this.ApiFuncs.Header.MenuItemClick.Booking);
 
                     jVarLocalWashingCompletedId.addEventListener("click", this.ApiFuncs.Header.MenuItemClick.Completed);
+
+                    jVarLocalBillingId.addEventListener("click", this.ApiFuncs.Header.MenuItemClick.Billing);
+
                 }
             },
             MenuItemClick:
@@ -32,6 +37,10 @@ class KSGlobalMenuClass {
                 Completed: async () => {
                     KSGlobalWashingCompletedClass.ApiFuncs.Header.ShowinDOM();
                     KSGlobalWashingCompletedClass.ApiFuncs.Show();
+                },
+                Billing: async () => {
+                    KSGlobalBillingClass.ApiFuncs.Header.ShowinDOM();
+                    KSGlobalBillingClass.ApiFuncs.Show();
                 }
             }
         }
